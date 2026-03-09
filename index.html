@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 CUESTIONARIO ASCENSOS POLICIALES 2025</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #d9e2ec 0%, #c2d0de 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 1100px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 48px 48px 36px 36px;
+            box-shadow: 0 25px 45px -10px #0a2f4e;
+            overflow: hidden;
+        }
+        .cabecera {
+            background: #0b2f4a;
+            color: white;
+            padding: 28px 36px 22px 36px;
+        }
+        .cabecera h1 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .cabecera p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .progreso-barra {
+            background-color: #204b6d;
+            border-radius: 100px;
+            height: 20px;
+            margin: 22px 0 12px 0;
+        }
+        .progreso-lleno {
+            background: #7ac7ff;
+            height: 20px;
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.2s ease;
+            box-shadow: 0 0 18px #9ad1ff;
+        }
+        .contadores {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #c7def5;
+        }
+        .cuerpo {
+            padding: 40px 40px 50px 40px;
+            background: #f7faff;
+        }
+        .pregunta-texto {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #0f293f;
+            margin-bottom: 35px;
+            line-height: 1.3;
+        }
+        .opciones-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .opcion-boton {
+            background: white;
+            border: 2px solid #b9ccde;
+            border-radius: 60px;
+            padding: 20px 32px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.15s;
+            color: #102b3f;
+            box-shadow: 0 5px 10px rgba(0,25,50,0.05);
+        }
+        .opcion-boton:hover:not(:disabled) {
+            background: #e0efff;
+            border-color: #1f6fb0;
+        }
+        .opcion-boton.correcta {
+            background: #caf0ce;
+            border-color: #138b34;
+            color: #0b5822;
+            font-weight: 600;
+        }
+        .opcion-boton.incorrecta {
+            background: #ffe0de;
+            border-color: #c53131;
+            color: #771c1c;
+            text-decoration: line-through 2px #c53131;
+        }
+        .opcion-boton:disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+        .retro-card {
+            background: white;
+            border-radius: 40px;
+            padding: 28px 32px;
+            border-left: 12px solid #1f6fb0;
+            box-shadow: 0 20px 35px rgba(9,60,110,0.15);
+            margin: 25px 0 30px 0;
+        }
+        .retro-titulo-correcto {
+            color: #0b6b2c;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .retro-titulo-incorrecto {
+            color: #b63131;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .retro-detalle {
+            font-size: 1.25rem;
+            background: #e9f2fc;
+            border-radius: 28px;
+            padding: 22px 28px;
+            color: #0f3b55;
+            line-height: 1.6;
+        }
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .btn {
+            border: none;
+            padding: 16px 34px;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: #1c4a70;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 16px rgba(8,50,85,0.3);
+        }
+        .btn:hover:not(:disabled) {
+            background: #2d6b9c;
+            transform: scale(1.02);
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-sec {
+            background: #4b6279;
+            box-shadow: none;
+        }
+        .indice-preg {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0c3b5e;
+        }
+        .reset-btn {
+            background: #284b63;
+            padding: 12px 28px;
+        }
+        .separador {
+            border: 1px solid #c1d6ec;
+            margin: 30px 0 15px 0;
+        }
+        .pie {
+            text-align: center;
+            color: #557c9a;
+            margin: 20px 0 10px 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container" id="quizContainer">
+    <div class="cabecera">
+        <h1>🚔 CONCURSO ASCENSOS 2025</h1>
+        <p>350 preguntas · Ley 12.521 · Dto 1166/18 · Dto 461/15 · Manual oficial</p>
+        <div class="progreso-barra">
+            <div class="progreso-lleno" id="barraProgreso"></div>
+        </div>
+        <div class="contadores">
+            <span id="textoContador">Pregunta 1 / 350</span>
+            <span id="puntajeDisplay">✅ 0  ·  ❌ 0</span>
+        </div>
+    </div>
+    <div class="cuerpo" id="cuerpoQuiz">
+        <!-- acá se inyecta la pregunta actual -->
+    </div>
+    <div class="pie">
+        ⚡ cada pregunta es única · basada en fuentes oficiales
+    </div>
+</div>
+<script>
+(function() {
+    // ------------------------------------------------------------
+    // ACÁ VAS A PEGAR CADA BLOQUE DE 30 PREGUNTAS
+    // (los bloques que te iré dando)
+    // ------------------------------------------------------------
+    const preguntas = [];
+
+    // ========== PEGÁ CADA BLOQUE DE PREGUNTAS A CONTINUACIÓN ==========
+    // (después de pegar cada bloque, guardás el archivo y lo abrís en el navegador)
+    
+    // A PARTIR DE ACÁ VAN LAS PREGUNTAS...
+    // ========== BLOQUE 1: PREGUNTAS 1-30 (Ley 12.521) ==========
+    preguntas.push({ id:1,  tipo:"mc", pregunta:"¿Cuál es el principio rector para los ascensos del personal policial según la Ley 12.521?", opciones:["Antigüedad","Idoneidad","Jerarquía","Necesidad del servicio"], correcta:1, exp:"Art. 73: 'Los ascensos del personal policial se regirán por el principio constitucional de idoneidad'." });
+    preguntas.push({ id:2,  tipo:"mc", pregunta:"Según el art. 4 de la Ley 12.521, ¿qué grados integran el agrupamiento 'funcionarios de coordinación'?", opciones:["Suboficial y Oficial","Inspector y Subcomisario","Comisario y Comisario Supervisor","Subdirector y Director"], correcta:1, exp:"Art. 4: Funcionarios de coordinación: inspector y subcomisario." });
+    preguntas.push({ id:3,  tipo:"vf", pregunta:"El personal del escalafón general es el único investido de autoridad policial.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 25: 'El personal policial del escalafón general es el único investido de autoridad policial'." });
+    preguntas.push({ id:4,  tipo:"mc", pregunta:"¿Cuál de los siguientes NO es un deber esencial del personal en actividad (art.23)?", opciones:["Sujeción al régimen disciplinario","Ejercer facultades de mando","Participar en actividades políticas partidarias uniformado","Guardar secreto"], correcta:2, exp:"El art. 23 no incluye participación política; por el contrario, el Dec. 461/15 considera falta grave." });
+    preguntas.push({ id:5,  tipo:"mc", pregunta:"¿Qué se entiende por 'estado policial' según la ley?", opciones:["La situación de servicio efectivo","El conjunto de deberes y derechos establecidos por leyes y decretos","La autoridad para portar armas","La permanencia en el grado"], correcta:1, exp:"Art. 22: 'Estado policial es la situación jurídica que resulta del conjunto de deberes y derechos establecidos por las leyes y decretos'." });
+    preguntas.push({ id:6,  tipo:"vf", pregunta:"La estabilidad del personal policial puede perderse por renuncia, sentencia firme o resolución definitiva por falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 8: causal de pérdida por renuncia, sentencia firme, resolución definitiva por falta grave, etc." });
+    preguntas.push({ id:7,  tipo:"mc", pregunta:"¿Cuántos días de licencia anual ordinaria corresponde al personal con antigüedad de 8 años?", opciones:["19 días","25 días","30 días","35 días"], correcta:1, exp:"Art. 82: desde 5 hasta 15 años: 25 días." });
+    preguntas.push({ id:8,  tipo:"mc", pregunta:"¿Qué órgano propone al Poder Ejecutivo la sanción de destitución?", opciones:["Jefe de Policía","Ministro de Seguridad","Tribunal de Conducta Policial","Fiscalía de Estado"], correcta:2, exp:"Art. 56: 'La destitución sólo puede disponerse por decreto del Poder Ejecutivo, a solicitud del tribunal de conducta policial'." });
+    preguntas.push({ id:9,  tipo:"mc", pregunta:"¿Cuál es la penalidad para la falta grave de 'no intervenir debidamente estando obligado a hacerlo' (art.43 inc. c)?", opciones:["Suspensión de hasta 5 días","Suspensión de empleo o propuesta de destitución","Apercibimiento agravado","Multa"], correcta:1, exp:"Las faltas graves pueden llevar a suspensión (hasta 30 días) o propuesta de destitución." });
+    preguntas.push({ id:10, tipo:"mc", pregunta:"¿En qué casos procede el ascenso extraordinario?", opciones:["Por buena conducta","Por acto de arrojo con grave riesgo en defensa de la vida o bienes","Por antigüedad excepcional","Por aprobar todos los cursos"], correcta:1, exp:"Art. 73 y Decreto 1166/18 Art.73: relacionado a acto de arrojo con grave riesgo." });
+    preguntas.push({ id:11, tipo:"mc", pregunta:"¿Qué tiempo mínimo de permanencia en el grado exige el Anexo II para ascender a Comisario (escalafón seguridad)?", opciones:["2 años","3 años","4 años","5 años"], correcta:1, exp:"Anexo II: Funcionarios de supervisión (Comisario): 3 años." });
+    preguntas.push({ id:12, tipo:"vf", pregunta:"El personal en situación de retiro mantiene el deber de guardar secreto sobre asuntos del servicio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 26: el personal en retiro está sujeto al deber de guardar secreto (art.23 inc. i)." });
+    preguntas.push({ id:13, tipo:"mc", pregunta:"¿Cuál es un derecho esencial del personal en actividad según el art.27?", opciones:["Huelga","Defensa letrada a cargo del Estado en juicios penales con motivo del servicio","Recibir dádivas","Elegir sus superiores"], correcta:1, exp:"Art.27 inc. j: defensa letrada a cargo del Estado en juicios por actos del servicio." });
+    preguntas.push({ id:14, tipo:"mc", pregunta:"¿Qué implica la 'superioridad por cargo'?", opciones:["Tener mayor antigüedad","Tener un grado más elevado","Resulta de la dependencia orgánica y la función que se desempeña","Haber ganado un concurso"], correcta:2, exp:"Art.19: 'Superioridad por cargo es la que resulta de la dependencia orgánica y en virtud de la cual el personal tiene superioridad sobre otro por la función que desempeña'." });
+    preguntas.push({ id:15, tipo:"vf", pregunta:"La licencia por violencia de género para trabajadoras del Estado provincial es de 5 días hábiles.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.194: 'La licencia se otorga por un plazo de tres (03) días hábiles' (Ley 13.696)." });
+    preguntas.push({ id:16, tipo:"mc", pregunta:"¿Qué escalafones integran la estructura del personal policial?", opciones:["Ejecución, Coordinación, Supervisión, Dirección","General, Profesional, Técnico y Servicios","Seguridad, Judicial e Investigación","Comisarios, Oficiales y Suboficiales"], correcta:1, exp:"Art.12: escalafón general, profesional, técnico y de servicios." });
+    preguntas.push({ id:17, tipo:"vf", pregunta:"El Jefe de Policía puede cambiar transitoriamente al personal de escalafón por necesidad del servicio con consentimiento del interesado.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.14: 'El Jefe de Policía de la Provincia podrá cambiar transitoriamente al personal de escalafón... con la voluntad del interesado'." });
+    preguntas.push({ id:18, tipo:"mc", pregunta:"¿Cuál de las siguientes NO es una falta grave tipificada en el art.43?", opciones:["Mantener vinculaciones con personas de antecedentes delictivos","Incumplir los plazos para tramitar medidas judiciales","Tardanza injustificada de 30 minutos","Aceptar dádivas"], correcta:2, exp:"La tardanza injustificada hasta 72h es falta leve (art.41 inc.c)." });
+    preguntas.push({ id:19, tipo:"mc", pregunta:"¿Cuál es la sanción para la falta leve de 'no suministrar información necesaria por razones administrativas' (art.41 inc. h)?", opciones:["Reconvención escrita o apercibimiento simple","Suspensión de 1 día","Suspensión de 5 días","Arresto"], correcta:0, exp:"Tabla Anexo I Decreto 461/15: corresponde reconvención o apercibimiento simple." });
+    preguntas.push({ id:20, tipo:"mc", pregunta:"¿Qué derecho tiene la mujer policía durante el período menstrual?", opciones:["Licencia de 3 días","Franquicia de 24 horas","Media jornada","Ninguno"], correcta:1, exp:"Art.80: 'La empleada policial en el período menstrual será autorizada a disponer de 24 horas de franquicia'." });
+    preguntas.push({ id:21, tipo:"mc", pregunta:"¿Cuál es el orden de precedencia del personal según el art.21?", opciones:["General, Profesional, Técnico, Servicios","Servicios, Técnico, Profesional, General","Profesional, General, Técnico, Servicios","El que determine el Jefe"], correcta:0, exp:"Art.21: a) general; b) profesional; c) técnico; d) servicios." });
+    preguntas.push({ id:22, tipo:"vf", pregunta:"La suspensión de empleo implica la privación del derecho a ascenso durante ese período.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.53 inc. g: la suspensión de empleo priva del derecho a los ascensos." });
+    preguntas.push({ id:23, tipo:"mc", pregunta:"¿Qué plazo máximo tiene la suspensión provisional (art.52)?", opciones:["6 horas","12 horas","24 horas","48 horas"], correcta:1, exp:"Art.52: 'La medida no podrá extenderse por un plazo mayor a doce (12) horas'." });
+    preguntas.push({ id:24, tipo:"mc", pregunta:"¿Qué implica la 'disponibilidad' según el art.90?", opciones:["Prestar servicio en otra provincia","Espera de designación o bajo sumario, entre otros","Licencia por estudio","Pase a retiro"], correcta:1, exp:"Art.90: revistará en disponibilidad el personal en espera de designación, bajo sumario, o sancionado con suspensión." });
+    preguntas.push({ id:25, tipo:"vf", pregunta:"El personal bajo sumario administrativo no puede participar en concursos de ascenso.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.79: 'El personal que se hallare bajo sumario administrativo podrá participar de los concursos', pero se suspende la propuesta de ascenso." });
+    preguntas.push({ id:26, tipo:"mc", pregunta:"¿Cuántos años de servicio se requieren como mínimo para el retiro voluntario con derecho a haber?", opciones:["20 años","25 años","30 años","35 años"], correcta:1, exp:"Art.17 (remite a Ley 11530): retiro voluntario con haber: 25 años." });
+    preguntas.push({ id:27, tipo:"mc", pregunta:"¿Qué son los 'suplementos generales' según el art.98?", opciones:["Bonificaciones para escalafones específicos","Bonificaciones que integran los haberes de todo el personal","Compensaciones por riesgo","Asignaciones por título"], correcta:1, exp:"Art.98: 'bonificaciones integrantes de los haberes mensuales del personal policial, cualquiera fuere el escalafón'." });
+    preguntas.push({ id:28, tipo:"vf", pregunta:"La acción disciplinaria prescribe a los 2 años para faltas graves.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.68: a los dos años de cometida las faltas graves." });
+    preguntas.push({ id:29, tipo:"mc", pregunta:"¿Qué integrantes conforman el Tribunal de Conducta Policial según el art.61?", opciones:["Dos funcionarios de dirección (uno abogado) y un representante del Ministerio","Tres jueces civiles","El Jefe y Subjefe de Policía","Dos oficiales y un suboficial"], correcta:0, exp:"Art.61: a) Dos funcionarios de grado de dirección (uno abogado); b) Un representante del Ministerio." });
+    preguntas.push({ id:30, tipo:"mc", pregunta:"¿Qué porcentaje del sueldo percibe el personal en disponibilidad por estar bajo sumario (inc. c art.90)?", opciones:["50%","75%","100%","0%"], correcta:1, exp:"Art.111 b: Los comprendidos en inciso c) del art.90: 75% del sueldo y suplementos generales." });
+    // ========== BLOQUE 2: PREGUNTAS 31-60 (Ley 12.521 - complemento) ==========
+    preguntas.push({ id:31, tipo:"mc", pregunta:"¿Cuál es la edad máxima de permanencia en actividad para un Oficial de Policía (escalafón general)?", opciones:["50 años","52 años","54 años","56 años"], correcta:0, exp:"Art.16 (Ley 12521 modif.): Oficial de Policía: 50 años (masculino) / 48 años (femenino)." });
+    preguntas.push({ id:32, tipo:"vf", pregunta:"El personal policial puede ser trasladado sin su consentimiento por razones de servicio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.71: los cambios de destino y traslados pueden ser dispuestos por el Jefe de Policía por razones de servicio." });
+    preguntas.push({ id:33, tipo:"mc", pregunta:"¿Qué es la 'rotación interna' según el art.70?", opciones:["Cambio de destino a otra localidad","Pase a prestar servicio en otra dependencia por tiempo determinado","Cambio de oficina en la misma dependencia","Pase a situación de disponibilidad"], correcta:2, exp:"Art.70: 'Se denomina rotación interna cuando se cambia de oficina o actividad del servicio, en la misma dependencia'." });
+    preguntas.push({ id:34, tipo:"mc", pregunta:"¿Qué requisito NO es necesario para el ingreso a la institución (art.32)?", opciones:["Ser argentino","Título de Auxiliar en Seguridad del I.Se.P.","No tener antecedentes penales","Tener título universitario"], correcta:3, exp:"Art.32: los requisitos son a) título Auxiliar en Seguridad; b) ser argentino; c) aptitud psicofísica; d) estatura y peso. No exige título universitario." });
+    preguntas.push({ id:35, tipo:"vf", pregunta:"El personal del escalafón profesional ingresa mediante concurso de admisión y debe acreditar título universitario.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.34: 'El personal del escalafón profesional ingresará mediante concurso de admisión. Para ser admitido deberá acreditar título universitario'." });
+    preguntas.push({ id:36, tipo:"mc", pregunta:"¿Qué son las 'faltas leves' según el art.40?", opciones:["Infracciones que atentan contra el orden constitucional","Infracciones o incumplimientos de deberes establecidos en leyes y reglamentos","Sólo las enumeradas en el art.41","Faltas que merecen destitución"], correcta:1, exp:"Art.40: las faltas administrativas se clasifican en leves y graves. Art.41: son leves las infracciones o incumplimientos de deberes." });
+    preguntas.push({ id:37, tipo:"vf", pregunta:"El concurso de 3 faltas leves implica falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.42: 'El concurso de 3 faltas leves implica falta grave'." });
+    preguntas.push({ id:38, tipo:"mc", pregunta:"¿Qué sanción NO es una medida de corrección según el art.44?", opciones:["Reconvención escrita","Apercibimiento simple","Apercibimiento agravado","Suspensión de empleo"], correcta:3, exp:"Art.44: medidas de corrección: reconvención, apercibimiento simple, apercibimiento agravado. Suspensión es medida de suspensión." });
+    preguntas.push({ id:39, tipo:"vf", pregunta:"El apercibimiento agravado produce efectos en la calificación de concursos.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.49: 'Tendrá efectos en la calificación de concursos, asignación de cargos y en toda circunstancia en que deba evaluarse el desempeño'." });
+    preguntas.push({ id:40, tipo:"mc", pregunta:"¿Qué plazo de inasistencias injustificadas configura falta grave (art.43 inc. f)?", opciones:["2 días","3 días","4 o más días en 10 días","Más de 10 días"], correcta:2, exp:"Art.43 inc. f: 'Las inasistencias injustificadas por espacio de 4 o más días corridos o alternados en el término de 10 días'." });
+    preguntas.push({ id:41, tipo:"mc", pregunta:"¿Qué implica la 'adscripción' según el art.70?", opciones:["Cambio definitivo de destino","Pase a otra dependencia por tiempo determinado con reintegro","Rotación interna","Pase a situación pasiva"], correcta:1, exp:"Art.70: 'Se denomina adscripción cuando se pasa a prestar servicio a una dependencia, por tiempo determinado y con obligación de reintegro'." });
+    preguntas.push({ id:42, tipo:"vf", pregunta:"El personal femenino tiene reducción de 2 años en las edades de retiro obligatorio respecto del masculino.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.16 Ley 12521 (modif. art.16 Ley 11530): 'Para el personal femenino se reducen en dos años las edades físicas indicadas'." });
+    preguntas.push({ id:43, tipo:"mc", pregunta:"¿Qué porcentaje del sueldo percibe el personal en situación de pasiva (art.112)?", opciones:["50%","75%","100%","0%"], correcta:0, exp:"Art.112: 'El personal policial que reviste en situación de pasiva, percibirá en concepto de haber mensual el cincuenta (50%) del sueldo'." });
+    preguntas.push({ id:44, tipo:"mc", pregunta:"¿Cuál es una de las causales de inhabilitación para concursar del art.78?", opciones:["Tener más de 10 años de antigüedad","No haber aprobado el curso de actualización obligatorio","Haber sido felicitado","Tener familia numerosa"], correcta:1, exp:"Art.78 inc. b: 'No haber aprobado el o los cursos de actualización o perfeccionamiento obligatorios'." });
+    preguntas.push({ id:45, tipo:"vf", pregunta:"Los ascensos post mortem pueden tener carácter retroactivo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Decreto 1166/18 Art.73 d: 'puedan tener carácter retroactivo'." });
+    preguntas.push({ id:46, tipo:"mc", pregunta:"¿Qué autoridad es competente para imponer sanción de suspensión de empleo de hasta 30 días?", opciones:["Jefe de Policía","Ministro de Seguridad","Tribunal de Conducta","Cualquier superior"], correcta:0, exp:"Art.59: 'El jefe de policía de la provincia tiene la facultad de imponer directamente sanción de suspensión de empleo de hasta treinta (30) días'." });
+    preguntas.push({ id:47, tipo:"mc", pregunta:"¿Qué recurso procede contra la suspensión impuesta por el Jefe de Policía?", opciones:["Reconsideración","Apelación ante el Poder Ejecutivo","Revocatoria","Ninguno"], correcta:1, exp:"Art.59: 'apelable sin efecto suspensivo ante el Poder Ejecutivo'." });
+    preguntas.push({ id:48, tipo:"vf", pregunta:"El procedimiento ante el Tribunal de Conducta es escrito, secreto y no público.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66: 'El procedimiento en el tribunal será oral, actuado y público'." });
+    preguntas.push({ id:49, tipo:"mc", pregunta:"¿Quién ejerce la defensa del sumariado si no designa defensor?", opciones:["El fiscal","El tribunal designa uno de oficio","El Jefe de Policía","Queda indefenso"], correcta:1, exp:"Art.63: 'De no hacer el sumariado ejercicio de éste derecho el tribunal de conducta le designará uno de oficio'." });
+    preguntas.push({ id:50, tipo:"vf", pregunta:"La prescripción de la acción disciplinaria se interrumpe desde la fecha que se ordena la instrucción.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.68: 'La prescripción se interrumpe desde la fecha que se ordena la instrucción'." });
+    preguntas.push({ id:51, tipo:"mc", pregunta:"¿Qué es la 'prioridad' según el art.6?", opciones:["Prelación por grado","Prelación sobre otro de igual grado por razones del orden en el escalafón","Antigüedad en el grado","Precedencia en el mando"], correcta:1, exp:"Art.6: 'Prioridad es la prelación que se tiene sobre otro de igual grado, por razones del orden en el escalafón'." });
+    preguntas.push({ id:52, tipo:"vf", pregunta:"El personal policial puede desempeñar actividades lucrativas incompatibles con autorización del superior.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.23 inc. j: deber de no desarrollar actividades lucrativas incompatibles. Decreto 461/15 las detalla." });
+    preguntas.push({ id:53, tipo:"mc", pregunta:"¿Qué requisito debe cumplir el personal para ser Defensor de parte según Decreto 461/15?", opciones:["Ser oficial principal","Ser funcionario de supervisión o dirección","Ser abogado","Tener más de 10 años de antigüedad"], correcta:1, exp:"Art.64 inc. 3 Decreto 461/15: 'Ser personal policial con grado jerárquico de los agrupamientos de Supervisión o Dirección'." });
+    preguntas.push({ id:54, tipo:"vf", pregunta:"El aumento patrimonial injustificado constituye falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Decreto 461/15 art.43 inc. λ punto 3: 'El aumento patrimonial injustificado' es falta grave." });
+    preguntas.push({ id:55, tipo:"mc", pregunta:"¿Qué plazo tiene el Jefe para convocar a descargo en sanción directa?", opciones:["12 horas","24 horas","48 horas","72 horas"], correcta:1, exp:"Decreto 461/15 art.50: 'Comprobada la falta, el superior convocará, dentro de las 24 (veinticuatro) horas'." });
+    preguntas.push({ id:56, tipo:"vf", pregunta:"La pena alternativa para apercibimiento simple es de 4 a 16 horas.", opciones:["Verdadero","Falso"], correcta:1, exp:"Decreto 461/15 art.51: apercibimiento simple: 16 a 24 horas. Reconvención: 4 a 16 horas." });
+    preguntas.push({ id:57, tipo:"mc", pregunta:"¿Qué recurso procede contra la resolución del Director General que resuelve un recurso de corrección?", opciones:["Reconsideración","Apelación ante el Ministro de Seguridad","Queja","Ninguno"], correcta:1, exp:"Decreto 461/15 art.50 Tít.II: apelación ante el Ministro de Seguridad." });
+    preguntas.push({ id:58, tipo:"vf", pregunta:"La suspensión de empleo por falta grave inhabilita para concursar en los dos años anteriores al ascenso.", opciones:["Verdadero","Falso"], correcta:0, exp:"Decreto 1166/18 art.78 inc. d: 'los años a ser revisados... serán los dos inmediatos anteriores al de los ascensos'." });
+    preguntas.push({ id:59, tipo:"mc", pregunta:"¿Qué valor tiene el título de 'Auxiliar en Seguridad Pública' en educación formal (Anexo II Dto 1166)?", opciones:["12 puntos","14 puntos","16 puntos","18 puntos"], correcta:1, exp:"Anexo II: Auxiliar en Seguridad Pública: 14 puntos." });
+    preguntas.push({ id:60, tipo:"vf", pregunta:"El puntaje mínimo para aprobar cada etapa del concurso es de 70 puntos.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.9: 'puntaje mínimo para aprobar cada una será de 60 puntos'." });
+    // ========== BLOQUE 3: PREGUNTAS 61-90 (Decreto 1166/18 – concursos) ==========
+    preguntas.push({ id:61, tipo:"mc", pregunta:"Según Decreto 1166/18, ¿qué ponderación tiene la oposición para el agrupamiento Coordinación?", opciones:["50%","60%","70%","80%"], correcta:2, exp:"Art.9 Anexo I: Coordinación: antecedentes 30%, oposición 70%." });
+    preguntas.push({ id:62, tipo:"mc", pregunta:"¿Cuánto vale el curso de actualización del I.Se.P. para el agrupamiento Supervisión?", opciones:["12 puntos","10 puntos","8 puntos","6 puntos"], correcta:2, exp:"Anexo II A.2.1: Supervisión: 8 puntos." });
+    preguntas.push({ id:63, tipo:"vf", pregunta:"El jurado para el ascenso de funcionarios de dirección incluye un representante del Poder Judicial.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.77 Ley 12.521 inc. a: incluye 'un representante del Poder Judicial designado por la Corte Suprema de Justicia'." });
+    preguntas.push({ id:64, tipo:"mc", pregunta:"¿Qué puntaje máximo puede obtenerse en el ítem 'Educación Formal' (Anexo II)?", opciones:["15 puntos","20 puntos","25 puntos","30 puntos"], correcta:1, exp:"Anexo II A.1: 'Nivel de Educación Formal, con un máximo de veinte (20) puntos'." });
+    preguntas.push({ id:65, tipo:"mc", pregunta:"¿Cuántos puntos vale un título secundario de 5 años en el nivel de educación formal?", opciones:["8 puntos","10 puntos","12 puntos","14 puntos"], correcta:1, exp:"Anexo II: 'Secundario con planes de estudios de 5 años: 10 puntos'." });
+    preguntas.push({ id:66, tipo:"vf", pregunta:"El puntaje por antigüedad en el grado (B.1.2) disminuye 0,25 por cada año adicional al mínimo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Anexo II: 'Por cada año adicional de permanencia en el grado se restará 0,25 puntos'." });
+    preguntas.push({ id:67, tipo:"mc", pregunta:"¿Qué puntaje corresponde a los grados del agrupamiento Supervisión en el ítem 'Grado que detenta'?", opciones:["9 puntos","11 puntos","13 puntos","15 puntos"], correcta:2, exp:"Anexo II B.1.1: Supervisión: 13 puntos." });
+    preguntas.push({ id:68, tipo:"vf", pregunta:"Los cursos que no registran carga horaria se estiman en 2 horas por día.", opciones:["Verdadero","Falso"], correcta:1, exp:"Anexo II A.2.1: 'se estimará que la misma fue de 4 horas por cada día de duración'." });
+    preguntas.push({ id:69, tipo:"mc", pregunta:"¿Cuánto vale cada día de jornada, seminario o congreso en el ítem A.2.2?", opciones:["0,10 puntos","0,25 puntos","0,50 puntos","1 punto"], correcta:1, exp:"Anexo II A.2.2: '0,25 puntos por día de actividad'." });
+    preguntas.push({ id:70, tipo:"mc", pregunta:"¿Cuál es el puntaje máximo del ítem 'Antecedentes Laborales'?", opciones:["40 puntos","50 puntos","60 puntos","70 puntos"], correcta:2, exp:"Anexo II: 'ítem b.- 'Antecedentes Laborales'... tendrá como máximo sesenta (60) puntos'." });
+    preguntas.push({ id:71, tipo:"vf", pregunta:"El representante del personal policial en el jurado se elige por voto igual, universal, secreto y obligatorio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.77 Ley 12.521: 'elegido entre sus pares por el sistema de voto igual, universal, secreto y obligatorio'." });
+    preguntas.push({ id:72, tipo:"mc", pregunta:"¿Qué plazo tiene el jurado para elaborar el orden de mérito?", opciones:["5 días hábiles","10 días hábiles","15 días hábiles","20 días hábiles"], correcta:1, exp:"Art.12 Anexo I: 'plazo de diez (10) días hábiles computados a partir de la última instancia de evaluación'." });
+    preguntas.push({ id:73, tipo:"mc", pregunta:"En caso de empate en el puntaje global, ¿qué criterio de desempate se aplica primero?", opciones:["Mayor puntaje en antecedentes","Mayor puntaje en oposición","Mayor antigüedad","Menor cantidad de faltas"], correcta:1, exp:"Art.12: 'se ordenará por aquel que tenga el mayor puntaje en la etapa de oposición'." });
+    preguntas.push({ id:74, tipo:"vf", pregunta:"El acta final del jurado debe publicarse durante al menos 5 días hábiles.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.14: 'publicación durante al menos tres (3) días hábiles'." });
+    preguntas.push({ id:75, tipo:"mc", pregunta:"¿Contra qué acto pueden interponerse impugnaciones según el Decreto 1166/18?", opciones:["Acta final del jurado","Resolución ministerial de propuesta","Decreto del Poder Ejecutivo que resuelve los ascensos","Listado de inscriptos"], correcta:2, exp:"Art.14: 'contra el acto del Poder Ejecutivo que resuelve los ascensos correspondientes'." });
+    preguntas.push({ id:76, tipo:"vf", pregunta:"El personal que se encuentre gozando de licencia médica no puede participar de los cursos del I.Se.P.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.78 inc. e: 'El personal que se encuentre gozando de alguna licencia médica... no podrá participar de los cursos'." });
+    preguntas.push({ id:77, tipo:"mc", pregunta:"¿Qué puntaje obtiene un Doctorado, Maestría o Especialización en el ítem B.2.6?", opciones:["1 punto","2 puntos","3 puntos","4 puntos"], correcta:1, exp:"Anexo II tabla B.2.6: 'Doctorado, Maestría o Especialización: 2 puntos'." });
+    preguntas.push({ id:78, tipo:"mc", pregunta:"¿Cuánto vale cada antecedente por falta disciplinaria leve en el ítem B.2.3?", opciones:["-0,10 puntos","-0,25 puntos","-0,50 puntos","-1 punto"], correcta:1, exp:"Anexo II B.2.3: 'Por cada antecedente que se registre por faltas disciplinarias leves se restará 0,25 puntos'." });
+    preguntas.push({ id:79, tipo:"vf", pregunta:"El examen de oposición para Dirección y Supervisión incluye la defensa oral y pública de un proyecto.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.11: 'los postulantes deberán elaborar un proyecto o plan de trabajo, el cual será defendido oral y públicamente'." });
+    preguntas.push({ id:80, tipo:"mc", pregunta:"¿Qué valor tiene la 'docencia e investigación' como ítem en antecedentes laborales?", opciones:["Hasta 5 puntos","Hasta 10 puntos","Hasta 15 puntos","Hasta 20 puntos"], correcta:0, exp:"Anexo II B.2.6: 'El puntaje máximo a otorgar es de 5 puntos'." });
+    preguntas.push({ id:81, tipo:"mc", pregunta:"¿Cuántos puntos vale el profesorado del I.Se.P. según la tabla B.2.6?", opciones:["1 punto","2 puntos","3 puntos","4 puntos"], correcta:1, exp:"Tabla B.2.6: 'Profesor del I.Se.P: 2 puntos'." });
+    preguntas.push({ id:82, tipo:"vf", pregunta:"Los ascensos extraordinarios están sujetos a los mismos requisitos que los ordinarios.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.73 Decreto 1166/18 inc. c: 'No estarán sujetos a los requisitos generales exigidos para los ascensos ordinarios'." });
+    preguntas.push({ id:83, tipo:"mc", pregunta:"¿Quién preside cada jurado actuante?", opciones:["El representante del Ministerio de Seguridad","El funcionario policial de dirección","El representante del Poder Judicial","El de mayor edad"], correcta:0, exp:"Art.5 Anexo I: 'Se desempeñará como presidente de cada jurado actuante el representante del Ministerio de Seguridad'." });
+    preguntas.push({ id:84, tipo:"vf", pregunta:"El secretario del jurado es el funcionario policial de dirección propuesto por el Jefe de Policía.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.5: 'y como secretario el funcionario policial de dirección designado a propuesta del Jefe de Policía'." });
+    preguntas.push({ id:85, tipo:"mc", pregunta:"¿Hasta cuándo puede recusarse a un integrante del jurado?", opciones:["Hasta 1 día antes de la inscripción","Hasta 3 días hábiles posteriores al cierre de inscripción","Hasta 5 días antes del examen","En cualquier momento"], correcta:1, exp:"Art.6: 'Todo integrante del jurado podrá ser recusado... hasta tres (3) días hábiles posteriores a la fecha de cierre de la inscripción'." });
+    preguntas.push({ id:86, tipo:"mc", pregunta:"¿Qué plazo tiene el recusado para manifestar lo que estime pertinente?", opciones:["1 día hábil","2 días hábiles","3 días hábiles","5 días hábiles"], correcta:1, exp:"Art.8: 'Del escrito de recusación se correrá traslado al recusado por el término de dos (2) días hábiles'." });
+    preguntas.push({ id:87, tipo:"vf", pregunta:"La excusación debe presentarse ante el Ministro de Seguridad acreditando la causal.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.7: 'La presentación deberá efectuarse ante el Ministro de Seguridad, acreditando debidamente la causal invocada'." });
+    preguntas.push({ id:88, tipo:"mc", pregunta:"¿Qué plazo tiene el Ministro para resolver la recusación, previa producción de pruebas?", opciones:["3 días hábiles","5 días hábiles","7 días hábiles","10 días hábiles"], correcta:1, exp:"Art.8: 'previa producción de las pruebas ofrecidas dentro del plazo de cinco (5) días hábiles'." });
+    preguntas.push({ id:89, tipo:"vf", pregunta:"La notificación del acta final se considera comunicación fehaciente a los concursantes.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.14: 'Dicha publicación se considerará comunicación fehaciente a los concursantes'." });
+    preguntas.push({ id:90, tipo:"mc", pregunta:"¿Qué recurso procede contra la declaración de inhabilitación?", opciones:["Recurso directo ante el Poder Ejecutivo","Recurso de reconsideración","Apelación ante el Ministro","Queja"], correcta:0, exp:"Art.78: 'El afectado podrá interponer recurso directo ante el Poder Ejecutivo contra la declaración de inhabilitación'." });
+    // ========== BLOQUE 4: PREGUNTAS 91-120 (Decreto 461/15 – régimen disciplinario) ==========
+    preguntas.push({ id:91, tipo:"mc", pregunta:"Según Decreto 461/15, ¿qué sanción NO admite pena alternativa?", opciones:["Reconvención escrita","Apercibimiento simple","Apercibimiento agravado","Todas admiten"], correcta:2, exp:"Art.51: 'Apercibimiento agravado: No es pasible de pena alternativa'." });
+    preguntas.push({ id:92, tipo:"mc", pregunta:"¿Cuántas horas de pena alternativa corresponde a una reconvención escrita?", opciones:["4 a 16 horas","16 a 24 horas","24 a 32 horas","8 a 12 horas"], correcta:0, exp:"Art.51: 'Reconvención escrita: De 4 (cuatro) a 16 (dieciséis) horas'." });
+    preguntas.push({ id:93, tipo:"vf", pregunta:"La pena alternativa debe realizarse dentro del horario de servicio habitual.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.51: 'Deben realizarse fuera del horario de servicio habitual'." });
+    preguntas.push({ id:94, tipo:"mc", pregunta:"¿Cuál es el plazo máximo para ejecutar la pena alternativa?", opciones:["15 días corridos","30 días corridos","45 días corridos","60 días corridos"], correcta:1, exp:"Art.51: 'Plazo máximo para la ejecución de la actividad alternativa: 30 (treinta) días corridos'." });
+    preguntas.push({ id:95, tipo:"vf", pregunta:"Si se incumple la pena alternativa, se aplica la sanción original.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.51: 'Ante su incumplimiento, se aplica la medida de corrección impuesta originariamente'." });
+    preguntas.push({ id:96, tipo:"mc", pregunta:"¿Quién es competente para aplicar sanción directa de corrección?", opciones:["Cualquier superior","El superior que compruebe la falta","Sólo el Director General","El Tribunal de Conducta"], correcta:1, exp:"Art.50: 'Es competente para la aplicación de la sanción directa de corrección el Superior que compruebe la falta'." });
+    preguntas.push({ id:97, tipo:"vf", pregunta:"Si la falta se comete ante varios superiores, resuelve el de mayor grado o antigüedad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.50: 'deberá resolver el de mayor grado o en su defecto, el de mayor antigüedad'." });
+    preguntas.push({ id:98, tipo:"mc", pregunta:"¿En qué plazo debe el superior convocar al presunto infractor a descargo?", opciones:["12 horas","24 horas","48 horas","Inmediatamente"], correcta:1, exp:"Art.50: 'dentro de las 24 (veinticuatro) horas'." });
+    preguntas.push({ id:99, tipo:"vf", pregunta:"El descargo en sanción directa debe ser por escrito y con patrocinio letrado.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.50: 'en forma verbal efectúe su descargo... No se requiere patrocinio letrado'." });
+    preguntas.push({ id:100, tipo:"mc", pregunta:"¿Qué plazo tiene el superior para resolver sobre la solicitud de pena alternativa?", opciones:["12 horas","24 horas","48 horas","72 horas"], correcta:1, exp:"Art.50: 'dentro de las siguientes 24 (veinticuatro) horas'." });
+    preguntas.push({ id:101, tipo:"vf", pregunta:"La resolución que concede o deniega la pena alternativa es recurrible.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.50: 'La resolución tomada es irrecurrible'." });
+    preguntas.push({ id:102, tipo:"mc", pregunta:"¿Contra qué resoluciones procede el recurso de apelación ante el Ministro de Seguridad?", opciones:["Sanción directa de corrección","Resolución del Director General en recurso de corrección","Acta de instrucción","Inhabilitación"], correcta:1, exp:"Art.50 Tít.II: 'recurso de apelación' contra la resolución del Director General." });
+    preguntas.push({ id:103, tipo:"vf", pregunta:"El recurso contra sanción de corrección tiene efecto suspensivo.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.50: 'La interposición del Recurso no tiene efectos suspensivos'." });
+    preguntas.push({ id:104, tipo:"mc", pregunta:"¿Qué plazo tiene el Director General para resolver el recurso de corrección?", opciones:["5 días","10 días","15 días","20 días"], correcta:1, exp:"Art.50: 'La resolución deberá dictarse dentro de los 10 (diez) días de recibida la causa'." });
+    preguntas.push({ id:105, tipo:"mc", pregunta:"¿Qué recurso procede contra la declaración de inadmisibilidad de un recurso?", opciones:["Revocatoria","Recurso directo (queja)","Apelación","Ninguno"], correcta:1, exp:"Art.50: 'sólo podrá cuestionarse dentro de los 3 (tres) días mediante recurso directo'." });
+    preguntas.push({ id:106, tipo:"vf", pregunta:"El fiscal puede solicitar el pase a disponibilidad del imputado durante el sumario.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.I punto 16: 'el Fiscal actuante podrá, mediante dictamen fundado, solicitar... el pase a disponibilidad'." });
+    preguntas.push({ id:107, tipo:"mc", pregunta:"¿Qué plazo máximo tiene la investigación preliminar (sin prórroga)?", opciones:["15 días","30 días","45 días","60 días"], correcta:1, exp:"Art.66 Tít.I punto 10: 'La investigación preliminar no podrá exceder del término de 30 (treinta) días'." });
+    preguntas.push({ id:108, tipo:"vf", pregunta:"La prórroga de la investigación preliminar puede ser indefinida.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66: 'podrá prorrogarse por única vez por otros 30 (treinta) días'." });
+    preguntas.push({ id:109, tipo:"mc", pregunta:"¿Quién designa al fiscal para cada causa?", opciones:["El Coordinador General","La Jefatura de Fiscales","El Ministro de Seguridad","Sorteo público"], correcta:1, exp:"Art.66 Tít.I punto 13: 'La Jefatura de Fiscales asignará la causa a un Fiscal'." });
+    preguntas.push({ id:110, tipo:"vf", pregunta:"Las actuaciones de la investigación son públicas desde el inicio.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66: 'Los actos de la investigación... serán secretos hasta la conclusión de la audiencia imputativa'." });
+    preguntas.push({ id:111, tipo:"mc", pregunta:"¿Qué plazo tiene el Fiscal para concluir la instrucción en sumario (sin prórroga)?", opciones:["30 días","60 días","90 días","120 días"], correcta:1, exp:"Art.66 Tít.II punto 1: 'la que no podrá superar el término de 60 (sesenta) días'." });
+    preguntas.push({ id:112, tipo:"vf", pregunta:"En la audiencia imputativa, el imputado puede negarse a declarar.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.II punto 1: 'El imputado tiene derecho a negarse a declarar'." });
+    preguntas.push({ id:113, tipo:"mc", pregunta:"¿Qué plazo tiene la defensa para ofrecer prueba después de la audiencia imputativa?", opciones:["5 días","10 días","15 días","20 días"], correcta:1, exp:"Art.66 Tít.II punto 2: 'por el término de 10 (diez) días'." });
+    preguntas.push({ id:114, tipo:"vf", pregunta:"La prueba ofrecida por la defensa es diligenciada siempre por el fiscal.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66 Tít.II punto 4: 'El diligenciamiento... es responsabilidad de la defensa'." });
+    preguntas.push({ id:115, tipo:"mc", pregunta:"¿Qué plazo tiene el Tribunal de Conducta para resolver el sumario luego de la audiencia final?", opciones:["3 días","5 días","7 días","10 días"], correcta:1, exp:"Art.66 Tít.II punto 12: 'Dentro de los 5 (cinco) días de concluida la audiencia final'." });
+    preguntas.push({ id:116, tipo:"vf", pregunta:"La resolución del Tribunal que propone destitución se remite al Poder Ejecutivo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.II punto 14: 'se remitirán inmediatamente al Ministerio de Seguridad a fin de someter la cuestión a la decisión del Poder Ejecutivo'." });
+    preguntas.push({ id:117, tipo:"mc", pregunta:"¿Qué plazo tiene la Oficina de Gestión Administrativa para registrar y comunicar el inicio del sumario?", opciones:["12 horas","24 horas","48 horas","72 horas"], correcta:1, exp:"Art.66 Tít.I punto 12: 'dentro de las 24 (veinticuatro) horas'." });
+    preguntas.push({ id:118, tipo:"vf", pregunta:"El procedimiento disciplinario es independiente de la causa penal por el mismo hecho.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.IV punto 4: 'son independientes de la causa penal iniciada por el mismo hecho'." });
+    preguntas.push({ id:119, tipo:"mc", pregunta:"¿Qué recurso procede contra la resolución del Tribunal de Conducta que impone suspensión?", opciones:["Reconsideración","Apelación ante el Ministerio de Seguridad","Revocatoria","Queja"], correcta:1, exp:"Art.66 Tít.VI: Apelación ante el Ministerio de Seguridad." });
+    preguntas.push({ id:120, tipo:"vf", pregunta:"La apelación contra resolución del Tribunal debe interponerse dentro de los 5 días.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66 Tít.VI: 'dentro de los 10 (diez) días de la notificación'." });
+    // ========== BLOQUE 5: PREGUNTAS 121-150 (Dto 461/15 – Organismo, recursos, destitución) ==========
+    preguntas.push({ id:121, tipo:"mc", pregunta:"¿Quién designa al Coordinador General del Organismo Administrativo de Conducta Policial?", opciones:["Ministro de Seguridad","Poder Ejecutivo a propuesta del Ministerio","Jefe de Policía","Concurso interno"], correcta:1, exp:"Art.60 Tít.II: 'nombrado por el Poder Ejecutivo a propuesta del Ministerio de Seguridad'." });
+    preguntas.push({ id:122, tipo:"vf", pregunta:"El Coordinador General puede suplir al miembro del Tribunal que representa al Ministerio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.60 Tít.II: 'Actuar en suplencia del miembro del Tribunal de Conducta Policial que representa al Ministerio de Seguridad'." });
+    preguntas.push({ id:123, tipo:"mc", pregunta:"¿Qué función NO corresponde a la Oficina de Gestión Administrativa?", opciones:["Realizar sorteos de fiscales","Resolver recursos de apelación","Notificar a las partes","Registrar actas y resoluciones"], correcta:1, exp:"Art.60 Tít.III: sus funciones son administrativas y de soporte; no resuelve recursos." });
+    preguntas.push({ id:124, tipo:"vf", pregunta:"Los miembros del Tribunal de Conducta actúan con independencia de criterio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.61 Tít.I punto 2: 'actuarán con total independencia de criterio'." });
+    preguntas.push({ id:125, tipo:"mc", pregunta:"¿Qué requisito es EXCLUYENTE para ser miembro del Tribunal (representante policial)?", opciones:["Ser Oficial Principal","No haber sido sancionado por falta disciplinaria grave","Tener más de 50 años","Ser abogado"], correcta:1, exp:"Art.61 Tít.I punto 6: 'No haber sido sancionado por falta disciplinaria grave' es excluyente." });
+    preguntas.push({ id:126, tipo:"vf", pregunta:"Para ser Fiscal se requiere título universitario de abogado.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.64 inc.2: 'Título Universitario de Abogado' es requisito excluyente." });
+    preguntas.push({ id:127, tipo:"mc", pregunta:"¿Cuál es el límite de edad para postularse a Fiscal (para no policías)?", opciones:["30 años","35 años","40 años","45 años"], correcta:1, exp:"Art.64 inc.2: 'mayor de 18 años y menor de 35 años de edad' (para no policías)." });
+    preguntas.push({ id:128, tipo:"vf", pregunta:"Los Fiscales y Defensores de Oficio pueden ejercer otros cargos policiales simultáneamente.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.65: 'Los Fiscales y Defensores de Oficio no podrán ejercer simultáneamente otros cargos en actividad'." });
+    preguntas.push({ id:129, tipo:"mc", pregunta:"¿Qué valor tiene la función de Defensor de parte?", opciones:["Es una carga del servicio, no remunerada","Es un cargo rentado aparte","Es optativo y pago","Es incompatible con el servicio"], correcta:0, exp:"Art.65: 'Es una carga del servicio, por lo que no se podrá percibir ninguna retribución ni gratificación'." });
+    preguntas.push({ id:130, tipo:"vf", pregunta:"El procedimiento disciplinario puede iniciarse de oficio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.I punto 1 inc. c: 'De oficio'." });
+    preguntas.push({ id:131, tipo:"mc", pregunta:"¿Cuál de estos NO es un tipo de procedimiento disciplinario según el art.66?", opciones:["Sumario administrativo","Información sumaria","Juicio político","Sanción directa"], correcta:2, exp:"Art.66 Tít.I punto 3: Sumario e Información sumaria son los procedimientos. Sanción directa es aparte." });
+    preguntas.push({ id:132, tipo:"vf", pregunta:"La información sumaria procede para reincidencia o concurso de 3 o más faltas leves.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.I punto 3.b: 'Reincidencia o el concurso de 3 (tres) o más faltas leves'." });
+    preguntas.push({ id:133, tipo:"mc", pregunta:"¿Qué plazo tiene el personal policial para comunicar un hecho pasible de sanción?", opciones:["12 horas","24 horas","48 horas","Inmediatamente"], correcta:3, exp:"Art.66 Tít.I punto 7: 'en forma inmediata' (y no más de 48h si hay razones)." });
+    preguntas.push({ id:134, tipo:"vf", pregunta:"El incumplimiento de la obligación de comunicar constituye falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.I punto 8: 'constituye falta grave, tipificada en el artículo 43 inc. e) y k)'." });
+    preguntas.push({ id:135, tipo:"mc", pregunta:"¿Qué recurso procede contra la resolución del Tribunal que impone sanción de corrección?", opciones:["El mismo que para sanciones de corrección (art.50)","Apelación directa al Ministro","Revocatoria","Ninguno"], correcta:0, exp:"Art.66 Tít.V punto 2: 'Contra las resoluciones del Tribunal de Conducta Policial que imponen sanciones de corrección resulta aplicable el artículo 50'." });
+    preguntas.push({ id:136, tipo:"vf", pregunta:"El recurso de apelación contra resolución del Tribunal tiene efecto suspensivo.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66 Tít.V punto 5: 'En todos los casos, la interposición del recurso... no tiene efectos suspensivos'." });
+    preguntas.push({ id:137, tipo:"mc", pregunta:"¿Contra qué resoluciones puede apelar la Jefatura de Fiscales?", opciones:["Sólo las absolutorias","Sobreseimiento, archivo o suspensión","Sólo las sancionatorias","Ninguna"], correcta:1, exp:"Art.66 Tít.VI punto 1.b: 'las resoluciones que dispongan el sobreseimiento, el archivo o aplicación de sanción de suspensión'." });
+    preguntas.push({ id:138, tipo:"vf", pregunta:"El recurso de revocatoria contra la destitución se presenta ante el Poder Ejecutivo directamente.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art.66 Tít.VII punto 3: 'por ante la Oficina de Gestión Administrativa'." });
+    preguntas.push({ id:139, tipo:"mc", pregunta:"¿Qué plazo tiene el Tribunal para emitir dictamen en el recurso de revocatoria?", opciones:["10 días","15 días","20 días","30 días"], correcta:1, exp:"Art.66 Tít.VII punto 5: 'Dicho dictamen deberá emitirse dentro de los 15 (quince) días'." });
+    preguntas.push({ id:140, tipo:"vf", pregunta:"Los plazos del Decreto 461/15 se computan en días hábiles administrativos, salvo horas.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.66 Tít.VIII punto 2: 'Todos los plazos... se computarán en días hábiles administrativos, salvo que expresamente se establezca lo contrario. Los plazos expresados en horas se computarán de forma corrida'." });
+    preguntas.push({ id:141, tipo:"mc", pregunta:"¿Qué norma se aplica supletoriamente en lo no previsto por el Decreto 461/15?", opciones:["Ley 12.521","Decreto 10.204/58 y Ley 8.525","Código Procesal Penal","Ley 14.228"], correcta:1, exp:"Art.66 Tít.VIII punto 3: 'se aplicarán supletoriamente las disposiciones del Decreto 10.204/58 y del Capítulo VI de la Ley 8.525'." });
+    preguntas.push({ id:142, tipo:"vf", pregunta:"La Tabla de Faltas Leves y Sanciones es meramente enunciativa.", opciones:["Verdadero","Falso"], correcta:0, exp:"Al pie de la tabla: 'La descripción de las faltas es de carácter enunciativo'." });
+    preguntas.push({ id:143, tipo:"mc", pregunta:"Según la tabla, ¿qué sanción corresponde a 'no saludar al superior'?", opciones:["Reconvención","Apercibimiento simple o agravado","Suspensión","Multa"], correcta:1, exp:"Tabla: 'No saludar al superior o no guardar en su presencia la debida compostura' suele ser apercibimiento simple o agravado." });
+    preguntas.push({ id:144, tipo:"vf", pregunta:"'Conducir de forma imprudente vehículos oficiales sin riesgo concreto' es falta leve.", opciones:["Verdadero","Falso"], correcta:0, exp:"Tabla: 'Conducir en forma imprudente... sin riesgo concreto para terceros' es falta leve." });
+    preguntas.push({ id:145, tipo:"mc", pregunta:"¿Qué agravante se considera en el art.46 del Decreto 461/15?", opciones:["La edad del infractor","La reincidencia","El turno en que ocurrió","El uniforme usado"], correcta:1, exp:"Art.46: 'Reincidencia' es uno de los criterios agravantes." });
+    preguntas.push({ id:146, tipo:"vf", pregunta:"El 'reconocimiento de la falta' es un atenuante.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.46: 'Reconocimiento de la falta' figura como criterio atenuante." });
+    preguntas.push({ id:147, tipo:"mc", pregunta:"¿Qué falta grave se configura por 'dormirse en servicio'?", opciones:["Falta leve","Falta grave","No está tipificado","Depende del lugar"], correcta:1, exp:"Art.43 inc. a punto 2 Decreto 461/15: 'Dormirse en servicio' es falta grave." });
+    preguntas.push({ id:148, tipo:"vf", pregunta:"Tener en servicio armas de fuego no autorizadas constituye falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.43 inc. a punto 10: 'Tener en servicio armas de fuego no autorizadas' es falta grave." });
+    preguntas.push({ id:149, tipo:"mc", pregunta:"¿Cuándo la falta de aseo se considera grave?", opciones:["Siempre es leve","Cuando es reiterada","Cuando es notoria","Nunca es grave"], correcta:1, exp:"Generalmente es leve, pero puede agravarse por reincidencia." });
+    preguntas.push({ id:150, tipo:"vf", pregunta:"El extravío del arma reglamentaria por negligencia inexcusable es falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art.43 inc. a punto 3: 'El extravío, pérdida o sustracción, por negligencia inexcusable, del arma reglamentaria' es falta grave." });
+    // ========== BLOQUE 6: PREGUNTAS 151-180 (Manual – microtráfico, Ley 14.239) ==========
+    preguntas.push({ id:151, tipo:"mc", pregunta:"¿Qué ley nacional establece la desfederalización parcial de la competencia en materia de estupefacientes?", opciones:["Ley 23.737","Ley 26.052","Ley 14.239","Ley 24.485"], correcta:1, exp:"Manual pág.9: Ley N° 26.052, que modificó el art. 34 de la Ley 23.737 estableciendo la competencia provincial." });
+    preguntas.push({ id:152, tipo:"mc", pregunta:"¿Qué ley provincial adhiere a la desfederalización del microtráfico en Santa Fe?", opciones:["Ley 12.521","Ley 13.348","Ley 14.239","Ley 14.228"], correcta:2, exp:"Manual pág.8: Ley Provincial N° 14.239 de adhesión a la desfederalización." });
+    preguntas.push({ id:153, tipo:"vf", pregunta:"En caso de duda sobre la competencia en materia de estupefacientes, prevalece la justicia provincial.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.11: 'En caso de duda sobre la competencia, prevalecerá la justicia federal' (principio de primacía federal)." });
+    preguntas.push({ id:154, tipo:"mc", pregunta:"¿Qué artículo de la Constitución Nacional establece las facultades delegadas al gobierno federal?", opciones:["Art. 75 inc. 12","Art. 121","Art. 116","Todos los anteriores"], correcta:3, exp:"Manual pág.8: Art. 75 inc. 12 (códigos de fondo), Art. 121 (poderes no delegados), Art. 116 (competencia federal)." });
+    preguntas.push({ id:155, tipo:"vf", pregunta:"La competencia federal en materia penal tiene carácter excepcional.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.8: 'La competencia federal reviste el carácter de excepcional'." });
+    preguntas.push({ id:156, tipo:"mc", pregunta:"¿Qué delitos de la Ley 23.737 pueden ser investigados por la justicia provincial según adhesión?", opciones:["Todos los delitos de la ley","Sólo el tráfico internacional","Comercio de estupefacientes fraccionados en dosis para consumidor","Cultivo industrial"], correcta:2, exp:"Manual pág.10: Art. 5 incs. c) y e) cuando se comercie con estupefacientes fraccionados en dosis destinadas al consumidor." });
+    preguntas.push({ id:157, tipo:"mc", pregunta:"¿Qué implica la 'conexidad subjetiva' según el manual?", opciones:["Delitos cometidos en el mismo lugar","Varios delitos imputados a una misma persona","Delitos cometidos por varias personas reunidas","Conexión con otra causa federal"], correcta:1, exp:"Manual pág.10-11: 'existe conexidad subjetiva cuando a una persona se le imputa más de un delito en concurso real'." });
+    preguntas.push({ id:158, tipo:"vf", pregunta:"La tenencia de estupefacientes para consumo personal está totalmente despenalizada en Argentina.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.14: Sigue siendo delito (art.14 2° párrafo) pero puede declararse inconstitucional en cada caso (Fallo Arriola)." });
+    preguntas.push({ id:159, tipo:"mc", pregunta:"¿Qué fallo de la CSJN declaró la inconstitucionalidad del art. 14 2° párrafo de la Ley 23.737 para consumo personal?", opciones:["Fallo Bazterrica","Fallo Montalvo","Fallo Arriola","Fallo Colavini"], correcta:2, exp:"Manual pág.14: 'Arriola' (2009) declaró inconstitucional el art. 14 2° párrafo para consumo personal sin peligro a terceros." });
+    preguntas.push({ id:160, tipo:"mc", pregunta:"¿Qué elemento NO es indicativo de tenencia con fines de comercialización?", opciones:["Fraccionamiento en dosis","Balanza de precisión","Dinero en efectivo","Consumo personal acreditado"], correcta:3, exp:"Manual pág.15: Para acreditar comercialización se consideran fraccionamiento, balanza, dinero, anotaciones, etc." });
+    preguntas.push({ id:161, tipo:"vf", pregunta:"El almacenamiento de estupefacientes es una figura agravada de la tenencia simple.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.20: 'el almacenamiento es una tenencia agravada por la cantidad'." });
+    preguntas.push({ id:162, tipo:"mc", pregunta:"¿Qué pena prevé el art. 5 inc. c) de la Ley 23.737 para la tenencia con fines de comercialización?", opciones:["2 a 6 años","3 a 10 años","4 a 15 años","6 a 20 años"], correcta:2, exp:"Manual pág.16: 'prisión de cuatro (4) a quince (15) años y multa'." });
+    preguntas.push({ id:163, tipo:"mc", pregunta:"¿Qué agravante se aplica cuando el delito se comete en el interior de un lugar de detención?", opciones:["Art. 11 inc. e)","Art. 14","Art. 5 inc. c)","Art. 29"], correcta:0, exp:"Manual pág.17: Art. 11 inc. e) aumenta la pena en un tercio cuando el delito se comete en establecimiento de detención." });
+    preguntas.push({ id:164, tipo:"vf", pregunta:"Para el delito de siembra o cultivo destinado a consumo personal, la pena es de 4 a 15 años.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.18: 'cuando por la escasa cantidad... destinada a consumo personal, la pena será de 1 mes a 2 años'." });
+    preguntas.push({ id:165, tipo:"mc", pregunta:"¿Qué determinó el Fallo 'Parissi' de la Cámara Federal de Casación?", opciones:["La constitucionalidad del art. 5 inc. a)","La inconstitucionalidad del cultivo para consumo personal","La legalización de todas las drogas","La competencia federal exclusiva"], correcta:1, exp:"Manual pág.19: Declaró la inconstitucionalidad del penúltimo párrafo del art. 5° (cultivo para consumo personal)." });
+    preguntas.push({ id:166, tipo:"vf", pregunta:"El transporte de estupefacientes no requiere acreditar intención de comercialización.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.21: 'no requiere la intención de comercialización... basta con acreditar el efectivo desplazamiento de la droga'." });
+    preguntas.push({ id:167, tipo:"mc", pregunta:"¿Qué ley provincial creó la Unidad Fiscal específica para microtráfico?", opciones:["Ley 13.348","Ley 14.239","Ley 14.228","Ley 12.521"], correcta:1, exp:"Manual pág.23: Ley 14.239 establece, entre otras cosas, la creación de una Unidad Fiscal específica." });
+    preguntas.push({ id:168, tipo:"vf", pregunta:"La persecución del microtráfico se enfoca prioritariamente en mercados abiertos, búnkeres y participación de menores.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.24: Art. 4 Ley 14.239 establece esos criterios prioritarios." });
+    preguntas.push({ id:169, tipo:"mc", pregunta:"¿Qué debe hacerse con los estupefacientes secuestrados según el art. 30 de la Ley 23.737?", opciones:["Conservarse como prueba","Destruirse en acto público","Entregarse a hospitales","Venderse en subasta"], correcta:1, exp:"Manual pág.24: 'El juez dispondrá la destrucción... en acto público dentro de los cinco (5) días'." });
+    preguntas.push({ id:170, tipo:"mc", pregunta:"¿Qué es la 'ultraintención' en el delito de tenencia con fines de comercialización?", opciones:["El dolo directo","La finalidad de comercio","El conocimiento de la ilegalidad","La participación en banda"], correcta:1, exp:"Manual pág.15: 'Ultraintención: La finalidad de comercio'." });
+    preguntas.push({ id:171, tipo:"vf", pregunta:"El principio de 'primacía federal' otorga preeminencia a la justicia federal en casos de duda o conexidad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.10: Arts. 3 y 4 de Ley 26.052 establecen primacía federal en casos de conexidad y duda." });
+    preguntas.push({ id:172, tipo:"mc", pregunta:"¿Qué artículo del Código Penal tipifica el suministro infiel de medicamentos?", opciones:["Art. 204","Art. 204 bis","Art. 204 ter","Art. 204 quater"], correcta:0, exp:"Manual pág.23: 'Art. 204 C.P. Suministro infiel o irregular de medicamentos'." });
+    preguntas.push({ id:173, tipo:"vf", pregunta:"La falsificación de recetas médicas (art. 29 Ley 23.737) es competencia de la justicia provincial por adhesión.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.23: Está incluida en el art. 34 Ley 23.737 como delito de competencia provincial (inc. 5)." });
+    preguntas.push({ id:174, tipo:"mc", pregunta:"¿Qué finalidad política tiene la persecución del microtráfico en Santa Fe según la Ley 14.239?", opciones:["Aumentar la población carcelaria","Mejorar la calidad de vida y desalentar conductas ilícitas","Recaudar multas","Competir con la justicia federal"], correcta:1, exp:"Manual pág.25: 'mejoramiento de la calidad de vida de las personas y al desaliento sostenido de la conducta ilícita'." });
+    preguntas.push({ id:175, tipo:"vf", pregunta:"En casos de flagrancia, el personal policial debe preservar el lugar del hecho e inmovilizar elementos removibles.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.26: 'Preservar el lugar del hecho: Mantener la intangibilidad del espacio físico... Inmovilizar elementos removibles'." });
+    preguntas.push({ id:176, tipo:"mc", pregunta:"¿Qué debe hacerse con un celular secuestrado en un procedimiento?", opciones:["Apagarlo inmediatamente","Colocarlo en modo avión y no apagarlo","Retirar la batería","Formatearlo"], correcta:1, exp:"Manual pág.26: 'El celular NO debe apagarse y se debe colocar en MODO AVIÓN'." });
+    preguntas.push({ id:177, tipo:"mc", pregunta:"¿Qué consulta es OBLIGATORIA al 0800-MPA según el protocolo?", opciones:["Faltantes de inventario","Personas aprehendidas","Solicitud de días de licencia","Cambio de destino"], correcta:1, exp:"Manual pág.30: 'Personas aprehendidas' es una de las consultas obligatorias." });
+    preguntas.push({ id:178, tipo:"vf", pregunta:"El Programa de Recompensas garantiza la reserva absoluta de la identidad del informante.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.31: 'garantiza la reserva absoluta de la identidad de las personas que brinden información útil'." });
+    preguntas.push({ id:179, tipo:"mc", pregunta:"¿Qué ley creó el Fondo Provincial de Recompensas?", opciones:["Ley 13.494","Ley 14.239","Ley 12.521","Ley 14.228"], correcta:0, exp:"Manual pág.32: 'Ley N° 13449' (debe ser 13.494, según el texto)." });
+    preguntas.push({ id:180, tipo:"vf", pregunta:"Quedan excluidos del Programa de Recompensas los miembros de fuerzas de seguridad en actividad o retirados.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.33: Art. 43 inc. 2: 'Los miembros de las fuerzas de seguridad... en actividad o retirados'." });
+    // ========== BLOQUE 7: PREGUNTAS 181-210 (Manual – Código Procesal Penal Juvenil) ==========
+    preguntas.push({ id:181, tipo:"mc", pregunta:"¿Cuándo entró en vigor el nuevo Código Procesal Penal Juvenil de Santa Fe (Ley 14.228)?", opciones:["21 de junio de 2024","21 de junio de 2025","1 de enero de 2025","1 de marzo de 2026"], correcta:1, exp:"Manual pág.33: 'El 21 de junio de 2025 entró en vigor el nuevo Código Procesal Penal Juvenil'." });
+    preguntas.push({ id:182, tipo:"vf", pregunta:"El nuevo régimen procesal penal juvenil se aplica a personas que al momento del hecho tengan menos de 18 años.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.34: 'personas que al momento de la comisión del hecho calificado como delito tengan menos de 18 años'." });
+    preguntas.push({ id:183, tipo:"mc", pregunta:"¿Qué rango de edad y tipo de delitos pueden ser imputados penalmente según el nuevo código?", opciones:["14 a 16 años todos los delitos","16 a 18 años con delitos de pena mínima superior a 2 años","15 a 17 años todos los delitos","18 a 21 años delitos graves"], correcta:1, exp:"Manual pág.34: 'Menores de entre 16 y 18 años que cometan delitos cuya pena mínima supere los dos años de prisión'." });
+    preguntas.push({ id:184, tipo:"vf", pregunta:"El ejercicio de la acción penal pública en el fuero juvenil está a cargo del MPA.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.34: 'el ejercicio de la acción penal pública esta a cargo del MPA'." });
+    preguntas.push({ id:185, tipo:"mc", pregunta:"¿Qué principio establece que los órganos judiciales deben tener competencia específica para juzgar a menores?", opciones:["Principio de oportunidad","Principio de especialidad","Principio de inocencia","Principio acusatorio"], correcta:1, exp:"Manual pág.35: 'Principios de especialidad/especificidad'." });
+    preguntas.push({ id:186, tipo:"vf", pregunta:"La privación de libertad del menor es de aplicación preferente como medida cautelar.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.35: 'La privación de la libertad ambulatoria es de aplicación restrictiva, debe ser impuesta como último recurso'." });
+    preguntas.push({ id:187, tipo:"mc", pregunta:"¿Cada cuánto deben revisarse las medidas que impliquen encierro?", opciones:["30 días","60 días","90 días","120 días"], correcta:2, exp:"Manual pág.35: 'La revisión de las medidas que impliquen encierro se hará en audiencia y como máximo cada 90 días'." });
+    preguntas.push({ id:188, tipo:"vf", pregunta:"Los menores imputados pueden ser alojados con mayores de edad si no hay espacio.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.35: 'No podrá disponerse el alojamiento de personas imputadas menores de edad juntamente con personas mayores de edad'." });
+    preguntas.push({ id:189, tipo:"mc", pregunta:"¿Qué plazo máximo de prórroga puede tener la privación de libertad sin que se haya iniciado el juicio?", opciones:["6 meses","1 año","2 años prorrogable por 1 año más","3 años"], correcta:2, exp:"Manual pág.40: 'esta medida no podrá en ningún caso exceder el plazo de dos (2) años, prorrogable como máximo por un (01) año más'." });
+    preguntas.push({ id:190, tipo:"vf", pregunta:"La suspensión del procedimiento a prueba puede solicitarse aún cuando no proceda condena condicional.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.35-36: 'aún cuando no proceda la aplicación de una condena de ejecución condicional'." });
+    preguntas.push({ id:191, tipo:"mc", pregunta:"¿Quiénes integran los Tribunales de la Investigación Penal Preparatoria Juvenil?", opciones:["Jueces penales juveniles unipersonales","Jueces de familia","Jurados populares","Fiscales"], correcta:0, exp:"Manual pág.36: 'Los Jueces Penales Juveniles... conformarán los distintos Tribunales... El Tribunal de la Investigación Penal Preparatoria Juvenil'." });
+    preguntas.push({ id:192, tipo:"vf", pregunta:"El menor imputado tiene derecho a ser oído en audiencia ante un juez.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.37: 'A ser oído en audiencia ante un Juez de la sección penal juvenil cuando lo estime conveniente'." });
+    preguntas.push({ id:193, tipo:"mc", pregunta:"¿Qué derecho NO le asiste al menor imputado?", opciones:["A entrevistarse con su defensor","A no ser sometido a interrogatorio policial","A la autodefensa sin abogado","A que se respete su identidad autopercibida"], correcta:2, exp:"Manual pág.37: 'No se permitirá la autodefensa de la persona menor de edad'." });
+    preguntas.push({ id:194, tipo:"vf", pregunta:"La víctima tiene derecho a ser escuchada en el proceso penal juvenil.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.38: 'las autoridades intervinientes... garantizarán a quienes aparezcan como víctimas... los derechos reconocidos'." });
+    preguntas.push({ id:195, tipo:"mc", pregunta:"¿En qué plazo debe realizarse la audiencia de imputación si el menor está detenido?", opciones:["24 horas","48 horas prorrogable por 24h","72 horas","5 días"], correcta:1, exp:"Manual pág.39: 'dentro de las cuarenta y ocho (48) horas del inicio de la privación de libertad, prorrogable por veinticuatro (24) horas'." });
+    preguntas.push({ id:196, tipo:"vf", pregunta:"Queda prohibida la incomunicación del menor, salvo grave riesgo para la investigación.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.39: 'Prohibición de Incomunicación... con excepción de aquellos casos en los cuales exista grave riesgo para la investigación'." });
+    preguntas.push({ id:197, tipo:"mc", pregunta:"¿Qué medida socioeducativa NO está contemplada en el art. 34 de la Ley 14.228?", opciones:["Prestar servicios a la comunidad","Reparar el daño","Prisión perpetua","Inclusión en programas de enseñanza"], correcta:2, exp:"Manual pág.41-42: Las medidas socioeducativas son alternativas a la pena, no incluyen prisión." });
+    preguntas.push({ id:198, tipo:"vf", pregunta:"El procedimiento abreviado requiere el consentimiento del menor y de sus responsables.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.42: 'deberá contarse con su consentimiento y el de quien ejerza su responsabilidad parental'." });
+    preguntas.push({ id:199, tipo:"mc", pregunta:"¿En cuántas etapas se divide el enjuiciamiento de un menor?", opciones:["Una sola etapa","Dos etapas: responsabilidad y determinación de pena","Tres etapas","Cuatro etapas"], correcta:1, exp:"Manual pág.42: 'El Enjuiciamiento De Una Persona Menor De Edad Se Llevará A Cabo En Dos Etapas'." });
+    preguntas.push({ id:200, tipo:"vf", pregunta:"En la audiencia de debate, el Tribunal puede requerir declaración al menor.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.43: 'En ningún caso el Tribunal podrá requerir declaración a la persona imputada menor de edad'." });
+    preguntas.push({ id:201, tipo:"mc", pregunta:"¿Qué es la 'declaración del impacto de la víctima'?", opciones:["Un informe pericial","La oportunidad de la víctima de expresar la afectación del delito","Un recurso","La sentencia"], correcta:1, exp:"Manual pág.43: 'el Juez o Tribunal convocará a la víctima... para que sean escuchadas en relación a lo que tengan que decir respecto de la afectación'." });
+    preguntas.push({ id:202, tipo:"vf", pregunta:"La sentencia que declara la responsabilidad del menor puede determinar la pena en el mismo acto.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.44: Se realiza en dos etapas; primero responsabilidad, luego en audiencia aparte se determina la pena." });
+    preguntas.push({ id:203, tipo:"mc", pregunta:"¿Qué ocurre con adolescentes que no alcanzan la edad mínima de responsabilidad penal?", opciones:["Quedan detenidos igual","Se da intervención al órgano administrativo de protección","Se los juzga como adultos","No se hace nada"], correcta:1, exp:"Manual pág.44-45: 'se dará inmediata intervención al órgano administrativo de aplicación de la ley 12967'." });
+    preguntas.push({ id:204, tipo:"vf", pregunta:"Para delitos graves cometidos por menores no punibles, el Fiscal puede solicitar medidas cautelares privativas de libertad.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.45: 'No podrá solicitar la aplicación de medidas cautelares que impliquen la privación de la libertad'." });
+    preguntas.push({ id:205, tipo:"mc", pregunta:"¿Qué organismo debe garantizar los espacios de alojamiento para menores?", opciones:["El Poder Judicial","El Poder Ejecutivo","El MPA","La Defensoría"], correcta:1, exp:"Manual pág.41: 'El Poder Ejecutivo deberá garantizar los espacios de alojamiento enumerados'." });
+    preguntas.push({ id:206, tipo:"vf", pregunta:"Las medidas socioeducativas pueden ser autónomas o accesorias de las cautelares.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.41: 'pueden ser autónomas o accesorias de las medidas cautelares precedentes'." });
+    preguntas.push({ id:207, tipo:"mc", pregunta:"¿Qué derecho tiene la persona menor de edad imputada respecto de su defensor?", opciones:["Sólo defensor oficial","Designar defensor de confianza","No necesita defensor","Defensor designado por sus padres sin su consentimiento"], correcta:1, exp:"Manual pág.37: 'El menor debe tener un defensor de confianza para que la asista y represente'." });
+    preguntas.push({ id:208, tipo:"vf", pregunta:"El querellante adhesivo puede pedir más pena que la solicitada por el Fiscal.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.38: 'solo será permitida la constitución como querellante adhesivo con los límites de las pretensiones ejercidas por el actor penal público'." });
+    preguntas.push({ id:209, tipo:"mc", pregunta:"¿Cuándo se considera que hay flagrancia según el art. 213 CPP?", opciones:["Sólo cuando es sorprendido cometiendo el hecho","Cuando es sorprendido, perseguido, tiene objetos o es señalado","Sólo con confesión","Cuando hay testigos"], correcta:1, exp:"Manual pág.26: Se considera flagrancia en los casos del art. 213 (sorprendido, señalado, perseguido, con objetos, fuga)." });
+    preguntas.push({ id:210, tipo:"vf", pregunta:"En accidentes de tránsito con lesiones leves, el presunto responsable debe quedar aprehendido.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.27: 'el presunto responsable no debe quedar aprehendido'." });
+    // ========== BLOQUE 8: PREGUNTAS 211-240 (Manual – Guardia Provincial, Constitución, Contravenciones, Uso de fuerza) ==========
+    preguntas.push({ id:211, tipo:"mc", pregunta:"¿Qué decreto reorganizó la Dirección General de Policía de Seguridad Vial como Guardia Provincial?", opciones:["Decreto 1166/18","Decreto 1170/2025","Decreto 461/15","Decreto 4055/77"], correcta:1, exp:"Manual pág.46: 'Según el Decreto N° 1170/2025... se reorganiza y pasa a denominarse Guardia Provincial'." });
+    preguntas.push({ id:212, tipo:"vf", pregunta:"La Guardia Provincial se enfoca en la prevención del delito en rutas y corredores estratégicos.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.46: 'adopta un perfil operativo-policial, enfocado en la prevención del delito en rutas, accesos y corredores estratégicos'." });
+    preguntas.push({ id:213, tipo:"mc", pregunta:"¿Qué función NO corresponde a la Guardia Provincial?", opciones:["Patrullaje de rutas","Control de tránsito exclusivamente","Colaboración en captura de prófugos","Prevención de narcotráfico"], correcta:1, exp:"Manual pág.46: 'Las tareas de seguridad vial y control de tránsito tenderán a transferirse a organismos civiles'." });
+    preguntas.push({ id:214, tipo:"vf", pregunta:"La reforma constitucional incorporó el derecho a la seguridad pública como derecho fundamental.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.47: 'Por primera vez, la Constitución santafesina incorpora un artículo específico que reconoce el derecho a la seguridad pública'." });
+    preguntas.push({ id:215, tipo:"mc", pregunta:"¿Qué artículo de la Constitución Provincial (reforma) reconoce el derecho a la seguridad?", opciones:["Art. 14","Art. 30","Art. 134","Art. 15"], correcta:1, exp:"Manual pág.48: 'Articulo 30: Toda persona tiene derecho a vivir en un entorno físico y digital seguro'." });
+    preguntas.push({ id:216, tipo:"vf", pregunta:"El Ministerio Público de la Acusación (MPA) fue declarado como extrapoder con presupuesto propio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.49: 'declaración del Ministerio Público de la Acusación (MPA) como extrapoder'." });
+    preguntas.push({ id:217, tipo:"mc", pregunta:"¿Quién designa al Fiscal General y al Defensor General según la reforma?", opciones:["El Jefe de Policía","El Poder Ejecutivo con acuerdo de la Asamblea Legislativa","El Ministro de Seguridad","La Corte Suprema"], correcta:1, exp:"Manual pág.50: Art. 135: 'designados por el Poder Ejecutivo con acuerdo de la Asamblea Legislativa'." });
+    preguntas.push({ id:218, tipo:"vf", pregunta:"El Fiscal General y el Defensor General duran 5 años en el cargo y pueden ser reelegidos por un solo período consecutivo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.50: Art. 135: 'Duran cinco años en el cargo... Pueden ser nuevamente designados por un solo período consecutivo'." });
+    preguntas.push({ id:219, tipo:"mc", pregunta:"¿Qué contravención sanciona la 'ebriedad escandalosa' (Art. 89)?", opciones:["Con arresto hasta 15 días","Multa de 5 jus","Inhabilitación para conducir","Trabajo comunitario"], correcta:0, exp:"Manual pág.52: 'será reprimido con arresto hasta quince días'." });
+    preguntas.push({ id:220, tipo:"vf", pregunta:"Para el ebrio habitual, el juez puede ordenar internación hasta 90 días.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.52: 'el juez podrá ordenar su internación... por un plazo que no exceda de noventa días'." });
+    preguntas.push({ id:221, tipo:"mc", pregunta:"¿Qué sanción prevé el Art. 84 bis para el acoso sexual callejero?", opciones:["Arresto","Multa de 1 a 5 unidades jus y/o curso de violencia de género","Inhabilitación","Expulsión de la fuerza"], correcta:1, exp:"Manual pág.53: 'multa de (una) 1 a (cinco) 5 unidades jus, y/o la realización de un curso presencial sobre violencia de género'." });
+    preguntas.push({ id:222, tipo:"vf", pregunta:"La conducción peligrosa en estado de ebriedad se agrava con arresto hasta 30 días y multa hasta 6 jus.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.54: Art. 105: 'Si el infractor estuviere conduciendo en estado de ebriedad, la pena se agravará con arresto hasta treinta días y multa hasta seis jus'." });
+    preguntas.push({ id:223, tipo:"mc", pregunta:"¿Cuál es el plazo máximo de demora en dependencia policial según el art. 10 bis de la LOP?", opciones:["3 horas","6 horas","12 horas","24 horas"], correcta:1, exp:"Manual pág.54: 'La demora no podrá exceder las seis (6) horas corridas'." });
+    preguntas.push({ id:224, tipo:"vf", pregunta:"Las personas demoradas pueden ser alojadas en celdas comunes si no hay otro lugar.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.54: 'no podrán ser alojados en lugares destinados a los detenidos por delitos o contravenciones'." });
+    preguntas.push({ id:225, tipo:"mc", pregunta:"¿Qué resoluciones ministeriales establecen el Protocolo para el Uso Progresivo de la Fuerza?", opciones:["1166/18 y 461/15","2237/2025 y 2871/25","4055/77 y 37/18","14.239 y 14.228"], correcta:1, exp:"Manual pág.55: 'Resoluciones Ministeriales Nros. 2237/2025 y 2871/25'." });
+    preguntas.push({ id:226, tipo:"vf", pregunta:"El protocolo de uso de la fuerza se aplica también al Servicio Penitenciario dentro de los penales.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.56: 'exclusivamente cuando actúe fuera del ámbito de los establecimientos penitenciarios. Dentro... se regirá únicamente por sus protocolos específicos'." });
+    preguntas.push({ id:227, tipo:"mc", pregunta:"¿Qué nivel de cooperación implica que la persona sigue las indicaciones del agente?", opciones:["Resistencia pasiva","Cooperación activa","Resistencia activa","Ataque directo"], correcta:1, exp:"Manual pág.57: 'Cooperación activa: la persona sigue las instrucciones del agente'." });
+    preguntas.push({ id:228, tipo:"vf", pregunta:"La 'resistencia pasiva' implica oposición directa con intentos de evasión.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.57: 'Resistencia pasiva: omite seguir indicaciones sin mediar fuerza física activa'. La que describe es 'resistencia activa'." });
+    preguntas.push({ id:229, tipo:"mc", pregunta:"¿Qué nivel de respuesta corresponde a 'resistencia activa' según el cuadro de niveles?", opciones:["Comunicación proactiva","Fuerza de traslado","Fuerza de contención","Fuerza defensiva"], correcta:2, exp:"Manual pág.58: Resistencia Activa → Fuerza de contención." });
+    preguntas.push({ id:230, tipo:"vf", pregunta:"La 'asimetría de la fuerza' faculta al agente a escalar la fuerza de manera preventiva.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.59: 'faculta al agente para escalar la fuerza de manera preventiva'." });
+    preguntas.push({ id:231, tipo:"mc", pregunta:"¿Qué tipo de asimetría se da por razones de tamaño físico?", opciones:["Asimetría numérica","Asimetría física","Asimetría mediana","Asimetría inicial"], correcta:1, exp:"Manual pág.59: 'Asimetría física: Desventaja... por razones de tamaño físico, altura o peso'." });
+    preguntas.push({ id:232, tipo:"vf", pregunta:"La letalidad de un medio se clasifica en baja, media y alta.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.61: Art. 12: 'puede clasificarse en tres (3) niveles de letalidad: a) baja, b) media, c) alta'." });
+    preguntas.push({ id:233, tipo:"mc", pregunta:"¿Cuál de estos es considerado armamento de menor letalidad?", opciones:["Fusil de asalto","Pistola 9mm","Arma de electrochoque","Granada de fragmentación"], correcta:2, exp:"Manual pág.61: Art. 13: 'Las armas de electrochoque' son consideradas de menor letalidad." });
+    preguntas.push({ id:234, tipo:"vf", pregunta:"El uso de cartucho en recámara está prohibido en toda circunstancia.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.62: 'Su autorización estará limitada a situaciones excepcionales' (riesgo inminente, alta peligrosidad, etc.)." });
+    preguntas.push({ id:235, tipo:"mc", pregunta:"¿Cuándo debe el agente justificar documentalmente la decisión de portar cartucho en recámara?", opciones:["Antes del operativo","Con posterioridad","Nunca","Sólo si se usa el arma"], correcta:1, exp:"Manual pág.62: 'El agente deberá justificar documentalmente, con posterioridad, su decisión'." });
+    preguntas.push({ id:236, tipo:"vf", pregunta:"La capacitación en uso de la fuerza debe incluir formación en derechos humanos.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.63: Art. 18: 'Dicha capacitación incluirá el conocimiento y aplicación de los principios de derechos humanos'." });
+    preguntas.push({ id:237, tipo:"mc", pregunta:"¿Qué organismo es autoridad de aplicación del Protocolo de Uso de la Fuerza?", opciones:["Jefatura de Policía","Ministerio de Justicia y Seguridad","Tribunal de Conducta","MPA"], correcta:1, exp:"Manual pág.56: 'El Ministerio de Justicia y Seguridad, en su carácter de autoridad de aplicación'." });
+    preguntas.push({ id:238, tipo:"vf", pregunta:"La certificación en uso de armas de menor letalidad es obligatoria para su uso.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.63: 'Será obligatorio acreditar formación específica en el manejo de armas de baja letalidad como condición previa para la habilitación'." });
+    preguntas.push({ id:239, tipo:"mc", pregunta:"¿Qué motivación de intervención excluye cualquier forma de arbitrariedad?", opciones:["Capricho personal","Requerimiento, iniciativa por análisis de riesgo o planes operativos","Órdenes informales","Sospecha sin fundamento"], correcta:1, exp:"Manual pág.59: Art. 8: 'Motivaciones de intervención... a) Requerimiento, b) Iniciativa en base a análisis de riesgo, c) Iniciativa en base a planes operativos'." });
+    preguntas.push({ id:240, tipo:"vf", pregunta:"La 'presencia disuasiva' es el primer nivel de graduación del uso de la fuerza.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.60: Art. 10 a) 'Presencia disuasiva' es el primer nivel." });
+    // ========== BLOQUE 9: PREGUNTAS 241-270 (Manual – Violencia de Género) ==========
+    preguntas.push({ id:241, tipo:"mc", pregunta:"¿Qué ley nacional establece la protección integral para prevenir, sancionar y erradicar la violencia contra las mujeres?", opciones:["Ley 23.737","Ley 24.485","Ley 26.485","Ley 12.521"], correcta:2, exp:"Manual pág.64: 'Ley Nro. 26.485 de PROTECCIÓN INTEGRAL PARA PREVENIR, SANCIONAR Y ERRADICAR LA VIOLENCIA CONTRA LAS MUJERES'." });
+    preguntas.push({ id:242, tipo:"vf", pregunta:"La violencia contra la mujer puede ser ejercida tanto en el ámbito público como en el privado.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.64: Art. 4: 'tanto en el ámbito público como en el privado, basada en una relación desigual de poder'." });
+    preguntas.push({ id:243, tipo:"mc", pregunta:"¿Qué tipo de violencia comprende toda conducta que cause daño emocional y disminución de la autoestima?", opciones:["Violencia física","Violencia psicológica","Violencia sexual","Violencia económica"], correcta:1, exp:"Manual pág.65: 'Violencia psicológica: La que causa daño emocional y disminución de la autoestima'." });
+    preguntas.push({ id:244, tipo:"vf", pregunta:"La violencia simbólica transmite y reproduce dominación, desigualdad y discriminación.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.67: 'Violencia simbólica: La que a través de patrones estereotipados... transmita y reproduzca dominación, desigualdad y discriminación'." });
+    preguntas.push({ id:245, tipo:"mc", pregunta:"¿Qué modalidad de violencia se ejerce contra las mujeres por un integrante del grupo familiar?", opciones:["Violencia institucional","Violencia laboral","Violencia doméstica","Violencia mediática"], correcta:2, exp:"Manual pág.67: 'Violencia Doméstica contra las mujeres: ejercida contra las mujeres por un integrante del grupo familiar'." });
+    preguntas.push({ id:246, tipo:"vf", pregunta:"La violencia obstétrica es ejercida por el personal de salud sobre el cuerpo y procesos reproductivos de las mujeres.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.69: 'Violencia Obstétrica: Aquella que ejerce el personal de salud sobre el cuerpo y los procesos reproductivos de las mujeres'." });
+    preguntas.push({ id:247, tipo:"mc", pregunta:"¿Qué fase NO pertenece al ciclo de la violencia de género?", opciones:["Acumulación de tensión","Agresión","Reconciliación (luna de miel)","Mediación judicial"], correcta:3, exp:"Manual pág.71: las fases son acumulación de tensión, agresión, reconciliación (luna de miel)." });
+    preguntas.push({ id:248, tipo:"vf", pregunta:"La 'luna de miel' es la fase donde el agresor pide perdón y promete cambiar.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.71: 'Fase de reconciliación: el maltratador suele pedir perdón, mostrarse amable y cariñoso'." });
+    preguntas.push({ id:249, tipo:"mc", pregunta:"¿Qué ley incorporó al Código Penal los delitos de género (femicidio, lesiones agravadas)?", opciones:["Ley 26.485","Ley 26.791","Ley 26.052","Ley 24.632"], correcta:1, exp:"Manual pág.75: 'la ley 26.791 estableció la sustitución de los incisos 1° y 4° del artículo 80'." });
+    preguntas.push({ id:250, tipo:"vf", pregunta:"El homicidio agravado por el vínculo (art. 80 inc. 1) incluye al ex cónyuge y a la persona con quien se mantuvo relación de pareja.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.76: 'cuando se matare al ex cónyuge o persona con quien mantiene o ha mantenido una relación de pareja'." });
+    preguntas.push({ id:251, tipo:"mc", pregunta:"¿Qué inciso del art. 80 tipifica el femicidio?", opciones:["Inc. 1","Inc. 4","Inc. 11","Inc. 12"], correcta:2, exp:"Manual pág.77: 'Inc. 11. 'A una mujer cuando el hecho sea perpetrado por un hombre y mediare violencia de género'." });
+    preguntas.push({ id:252, tipo:"vf", pregunta:"El odio de género o a la orientación sexual es agravante del homicidio (art. 80 inc. 4).", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.77: 'odio de género o a la orientación sexual, identidad de género o su expresión'." });
+    preguntas.push({ id:253, tipo:"mc", pregunta:"¿Qué artículo del Código Penal agrava las lesiones por las mismas circunstancias del art. 80?", opciones:["Art. 89","Art. 90","Art. 91","Art. 92"], correcta:3, exp:"Manual pág.79: 'el art. 92 del Código Penal... Si concurriere alguna de las circunstancias enumeradas en el artículo 80, la pena será...'." });
+    preguntas.push({ id:254, tipo:"vf", pregunta:"Las lesiones leves en contexto de violencia de género son de instancia privada y no pueden investigarse de oficio.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.80: 'cuando mediaren razones de interés público... podrá procederse de oficio'." });
+    preguntas.push({ id:255, tipo:"mc", pregunta:"En casos de violencia de género, ¿qué valor probatorio tiene el testimonio de la víctima?", opciones:["Es insuficiente","Debe ser corroborado","Puede ser suficiente para formar convicción","Sólo vale si hay testigos"], correcta:2, exp:"Manual pág.81: 'la convicción judicial... no depende de la cantidad de los elementos de prueba... incluso cuando ella principalmente se asiente en el relato de la víctima'." });
+    preguntas.push({ id:256, tipo:"vf", pregunta:"La Ley 26.485 obliga a ciertos agentes (salud, educación) a denunciar hechos de violencia de género.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.84: 'Las personas que se desempeñen en servicios asistenciales, sociales, educativos y de salud... estarán obligados a formular las denuncias'." });
+    preguntas.push({ id:257, tipo:"mc", pregunta:"¿Qué medidas pueden solicitarse en el fuero civil en casos de violencia doméstica?", opciones:["Prisión preventiva","Exclusión del hogar","Extracción de sangre","Allanamiento"], correcta:1, exp:"Manual pág.86-87: 'Medida de Distancia, Exclusión del hogar, Restitución de bienes, Botón de alarma, etc.'." });
+    preguntas.push({ id:258, tipo:"vf", pregunta:"Si el denunciado por violencia de género es personal policial, se debe proceder a la quita del arma reglamentaria.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.90: 'Si el denunciado es Personal Policial con PORTACIÓN DE ARMA se dispone: Quita del arma reglamentaria'." });
+    preguntas.push({ id:259, tipo:"mc", pregunta:"¿Cuántas entrevistas psicológicas se requieren como mínimo para restituir el arma al denunciado?", opciones:["1 entrevista","2 entrevistas","3 entrevistas","5 entrevistas"], correcta:2, exp:"Manual pág.90: 'Para restituir el Arma Reglamentaria se requerirán NO MENOS DE 3 ENTREVISTAS psicológicas/psiquiátricas'." });
+    preguntas.push({ id:260, tipo:"vf", pregunta:"La Ley de Identidad de Género (N° 26.743) reconoce el derecho a ser tratado conforme a la identidad de género autopercibida.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.90: 'da a toda persona el derecho al reconocimiento de su género... y a ser tratada de acuerdo con su identidad de género'." });
+    preguntas.push({ id:261, tipo:"mc", pregunta:"¿Qué requisito NO es necesario para la rectificación registral del sexo según Ley 26.743?", opciones:["Ser mayor de 18 años (con excepciones)","Presentar solicitud","Expresar el nuevo nombre","Acreditar intervención quirúrgica"], correcta:3, exp:"Manual pág.91: 'En ningún caso será requisito acreditar intervención quirúrgica'." });
+    preguntas.push({ id:262, tipo:"vf", pregunta:"Para menores de edad, la solicitud de rectificación registral debe efectuarse con la conformidad del menor y asistencia letrada.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.91: 'con expresa conformidad del menor... y la asistencia del abogado del niño'." });
+    preguntas.push({ id:263, tipo:"mc", pregunta:"¿Qué significa la sigla LGBTI?", opciones:["Lesbianas, Gays, Bisexuales, Trans, Intersexuales","Liga de Género y Bienestar","Grupo de Investigación","Ley General de Bienestar"], correcta:0, exp:"Manual pág.95: 'Lesbianas, Gays, Bisexuales, Trans (travestis, transexuales y transgéneros) e Intersexuales'." });
+    preguntas.push({ id:264, tipo:"vf", pregunta:"La Ley 11.529 de Violencia Familiar comprende a personas que sufran lesiones o malos tratos por parte de integrantes del grupo familiar.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.97: 'esta legislación comprende a todas aquellas personas que sufrieran lesiones o malos tratos físicos o psíquicos por parte de alguno de los integrantes del grupo familiar'." });
+    preguntas.push({ id:265, tipo:"mc", pregunta:"¿Qué medida autosatisfactiva puede adoptar el juez en casos de violencia familiar?", opciones:["Prisión preventiva","Exclusión del agresor de la vivienda","Extracción de sangre","Juicio por jurados"], correcta:1, exp:"Manual pág.98: 'Ordenar la exclusión del agresor de la vivienda' es una de las medidas." });
+    preguntas.push({ id:266, tipo:"vf", pregunta:"El fiscal puede adoptar medidas de exclusión del hogar por un máximo de 72 horas.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.99: 'El Fiscal... podrá adoptar de inmediato las medidas de los incisos a) y b) del presente artículo por un máximo de setenta y dos (72) horas'." });
+    preguntas.push({ id:267, tipo:"mc", pregunta:"¿Qué organismo debe recibir la denuncia de violencia familiar según la ley?", opciones:["Sólo la policía","Ministerio Público o cualquier juez","Defensoría del Pueblo","Secretaría de Derechos Humanos"], correcta:1, exp:"Manual pág.97: 'ante cualquier juez o ante el Ministerio Público'." });
+    preguntas.push({ id:268, tipo:"vf", pregunta:"Los procesos de violencia familiar son públicos para garantizar la transparencia.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.97: 'Todos los procesos serán de trámite reservado'." });
+    preguntas.push({ id:269, tipo:"mc", pregunta:"¿Qué debe hacer el personal policial si la víctima de violencia de género es también policía?", opciones:["Nada especial","Derivarla a la Dirección de Bienestar de las Fuerzas de Seguridad","Avisar a su superior","Archivar la denuncia"], correcta:1, exp:"Manual pág.89: 'SI LA VÍCTIMA ES PERSONAL POLICIAL SE LA DEBE DERIVAR A LA DIRECCIÓN DE BIENESTAR DE LAS FUERZAS DE SEGURIDAD'." });
+    preguntas.push({ id:270, tipo:"vf", pregunta:"El principio de independencia de la causa penal aplica en casos de violencia de género con personal policial involucrado.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.90: 'Principio de independencia de la causa penal'." });
+    // ========== BLOQUE 10: PREGUNTAS 271-300 (Manual – Conducción, Liderazgo, Seguridad Información) ==========
+    preguntas.push({ id:271, tipo:"mc", pregunta:"Según el manual, ¿qué es un 'jefe' en la organización policial?", opciones:["Quien ejerce el mando, comando y conducción","El de mayor jerarquía","Quien tiene más años de servicio","El que da órdenes sin responsabilidad"], correcta:0, exp:"Manual pág.101: 'Es la persona que ejerce el mando, el comando y la conducción de una organización policial'." });
+    preguntas.push({ id:272, tipo:"vf", pregunta:"La mutua confianza entre jefe y subordinados es la base más segura de disciplina.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.101: 'La mutua confianza entre jefe y subordinados es la base mas segura de disciplina'." });
+    preguntas.push({ id:273, tipo:"mc", pregunta:"¿Qué cualidad es la más relevante del que manda según el manual?", opciones:["Antigüedad","Fuerza física","Amor a la responsabilidad","Popularidad"], correcta:2, exp:"Manual pág.101: 'El amor a la responsabilidad es la cualidad mas relevante del que manda'." });
+    preguntas.push({ id:274, tipo:"vf", pregunta:"El mando autoritario y el mando persuasivo son los límites del mando correcto.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.102: 'Sus límites son el mando autoritario y el mando persuasivo'." });
+    preguntas.push({ id:275, tipo:"mc", pregunta:"¿Qué estilo de mando se corrompe en déspota, ególatra o terco?", opciones:["Persuasivo","Autoritario","Demagogo","Indolente"], correcta:1, exp:"Manual pág.102: 'Si se excede de lo autoritario se corrompe en Déspota, Ególatra o Terco'." });
+    preguntas.push({ id:276, tipo:"vf", pregunta:"La 'conducción' es la aplicación del comando a la solución de un problema policial.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.103: 'Es la aplicación del comando a la solución de un problema policial'." });
+    preguntas.push({ id:277, tipo:"mc", pregunta:"¿Cuál de los siguientes NO es un principio de la conducción?", opciones:["Objetivo","Sorpresa","Masa","Jerarquía"], correcta:3, exp:"Manual pág.103-104: Los principios son objetivo, ofensiva, sorpresa, masa, economía de fuerza, maniobra, unidad de comando, sencillez, seguridad, libertad de acción, voluntad de vencer." });
+    preguntas.push({ id:278, tipo:"vf", pregunta:"El principio de 'masa' implica la aplicación concentrada de poder de acción superior en el momento y lugar oportuno.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.104: 'Aplicación concentrada de un poder de acción superior, en el momento y lugar oportunos'." });
+    preguntas.push({ id:279, tipo:"mc", pregunta:"¿Qué principio busca evitar todo lo complicado y superfluo?", opciones:["Seguridad","Sencillez","Economía de fuerza","Maniobra"], correcta:1, exp:"Manual pág.105: 'Principio de la sencillez: Evitar todo aquello que resulte complicado y superfluo'." });
+    preguntas.push({ id:280, tipo:"vf", pregunta:"La 'unidad de comando' asigna a un solo jefe la autoridad para obtener unidad de esfuerzos.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.104: 'Asignación a un solo jefe de la autoridad requerida para obtener unidad de esfuerzos'." });
+    preguntas.push({ id:281, tipo:"mc", pregunta:"¿Qué técnica de conducción comprende el ciclo AROS?", opciones:["Análisis, Resolución, Organización, Supervisión","Apreciación, Resolución, Órdenes, Supervisión","Acción, Reacción, Oportunidad, Seguridad","Análisis, Riesgo, Operación, Síntesis"], correcta:1, exp:"Manual pág.106: 'Apreciación, Resolución y Planes, Órdenes, Supervisión'." });
+    preguntas.push({ id:282, tipo:"vf", pregunta:"El ejercicio de la conducción mediante MATI significa Misión, Asignación, Tiempo, Información.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.107: 'Misión, Asignación de medios, Tiempo, Información'." });
+    preguntas.push({ id:283, tipo:"mc", pregunta:"¿Qué nivel de conducción adecua los medios para lograr los objetivos?", opciones:["Conducción política","Conducción estratégica","Conducción táctica","Conducción operacional"], correcta:1, exp:"Manual pág.107: 'Conducción Estratégica: Adecua los medios para lograr los objetivos'." });
+    preguntas.push({ id:284, tipo:"vf", pregunta:"La 'táctica' emplea los medios para obtener los objetivos en el corto plazo y espacio menor.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.108: 'Táctica: Arte de conducir las tropas... a corto plazo y en un espacio menor'." });
+    preguntas.push({ id:285, tipo:"mc", pregunta:"¿Qué es un 'procedimiento' en el contexto policial?", opciones:["Un plan estratégico","Integración de técnicas para una situación determinada","Una orden escrita","Una sanción"], correcta:1, exp:"Manual pág.108: 'Integración de un conjunto de técnicas que se aplican en una situación determinada'." });
+    preguntas.push({ id:286, tipo:"vf", pregunta:"El líder necesita de la jerarquía formal para lograr que las personas lo sigan.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.112: 'El líder no necesita de la jerarquía formal para lograr que las personas lo sigan y lo respeten'." });
+    preguntas.push({ id:287, tipo:"mc", pregunta:"¿Qué condición debe reunir un buen líder según el manual?", opciones:["Ser el más antiguo","Compromiso con la misión, comunicación de la visión, confianza, integridad","Tener fuerza física","Ser abogado"], correcta:1, exp:"Manual pág.114: 'Compromiso con la misión, Comunicación de la visión, Confianza en sí mismo, Integridad personal'." });
+    preguntas.push({ id:288, tipo:"vf", pregunta:"La inteligencia emocional es más importante en niveles altos de la organización.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.114: 'juega un papel muy importante en los niveles más altos de la organización'." });
+    preguntas.push({ id:289, tipo:"mc", pregunta:"¿Qué herramienta de análisis permite examinar Fortalezas, Oportunidades, Debilidades y Amenazas?", opciones:["Ciclo PDCA","Análisis FODA","Teoría de la elección racional","Diagrama de flujo"], correcta:1, exp:"Manual pág.117: 'Analisis Foda (SWOT)'." });
+    preguntas.push({ id:290, tipo:"vf", pregunta:"La 'teoría de la elección racional' analiza alternativas según las intenciones y metas.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.118: 'permite analizar las alternativas que se nos ofrecen en cada situación, de acuerdo a las intenciones'." });
+    preguntas.push({ id:291, tipo:"mc", pregunta:"¿Qué tipo de comunicación expresa opiniones de forma clara respetando al otro?", opciones:["Comunicación agresiva","Comunicación pasiva","Comunicación asertiva","Comunicación indirecta"], correcta:2, exp:"Manual pág.119: 'Comunicación asertiva: expresar nuestras opiniones libres, claramente... pero sin lastimar o agredir'." });
+    preguntas.push({ id:292, tipo:"vf", pregunta:"La empatía es la capacidad de expresar nuestras opiniones sin agredir.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.120: 'empatia es la capacidad de ponernos en los zapatos del otro'. La descripción corresponde a asertividad." });
+    preguntas.push({ id:293, tipo:"mc", pregunta:"¿Qué es una 'orden de operaciones' (OO)?", opciones:["Un aviso preliminar","Determina la acción coordinada para ejecutar la resolución de un jefe","Un procedimiento rutinario","Una sanción"], correcta:1, exp:"Manual pág.121: 'Determina la acción coordinada para ejecutar la resolución de un jefe, correspondiente a una operación táctica'." });
+    preguntas.push({ id:294, tipo:"vf", pregunta:"La triada CID en seguridad de la información es Confidencialidad, Integridad y Disponibilidad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.129: 'La triada CID (confidencialidad, integridad y disponibilidad)'." });
+    preguntas.push({ id:295, tipo:"mc", pregunta:"¿Qué principio de seguridad asegura que la información no sea alterada sin autorización?", opciones:["Confidencialidad","Integridad","Disponibilidad","Autenticidad"], correcta:1, exp:"Manual pág.127: 'Integridad: garantiza que la información no sea alterada de forma no autorizada'." });
+    preguntas.push({ id:296, tipo:"vf", pregunta:"La seguridad informática se enfoca exclusivamente en proteger sistemas tecnológicos.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.128: 'La seguridad informática se enfoca exclusivamente en proteger los sistemas tecnológicos'." });
+    preguntas.push({ id:297, tipo:"mc", pregunta:"¿Qué concepto describe un evento o acción que puede causar daño a los sistemas?", opciones:["Vulnerabilidad","Riesgo","Amenaza","Ataque"], correcta:2, exp:"Manual pág.129: 'Amenaza: cualquier evento o acción que pueda causar daño'." });
+    preguntas.push({ id:298, tipo:"vf", pregunta:"El factor humano puede ser tanto el eslabón más débil como el más fuerte en seguridad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.136: 'puede ser tanto el eslabón más débil como el más fuerte'." });
+    preguntas.push({ id:299, tipo:"mc", pregunta:"¿Qué medida de autenticación agrega un segundo factor a la contraseña?", opciones:["Antivirus","Firewall","2FA (doble factor)","Cifrado"], correcta:2, exp:"Manual pág.146: 'Autenticación de doble factor (2FA): requiere dos formas de verificación'." });
+    preguntas.push({ id:300, tipo:"vf", pregunta:"Un incidente de seguridad debe ser documentado y notificado al responsable de seguridad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.142-143: 'Documentar, notificar al equipo de soporte, registrar el incidente'." });
+    // ========== BLOQUE 11: PREGUNTAS 301-330 (Manual – Comunicación, Redacción, Legislación Policial) ==========
+    preguntas.push({ id:301, tipo:"mc", pregunta:"¿Qué concepto designa el grado de facilidad con que se puede leer, comprender y memorizar un texto?", opciones:["Redacción","Legibilidad","Sintaxis","Ortografía"], correcta:1, exp:"Manual pág.154: 'legibilidad designa el grado de facilidad con el que se puede leer, comprender y memorizar un texto'." });
+    preguntas.push({ id:302, tipo:"vf", pregunta:"Las palabras cortas y básicas aumentan la legibilidad de un texto.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.154: Cuadro de legibilidad: 'Palabras cortas y básicas' dan alta legibilidad." });
+    preguntas.push({ id:303, tipo:"mc", pregunta:"¿Qué movimiento promueve la redacción en estilo llano y asequible para todos?", opciones:["Movimiento de Legibilidad","Movimiento del Estilo Llano","Nuevo Código Procesal","Reforma ortográfica"], correcta:1, exp:"Manual pág.155: 'Movimiento del Estilo Llano'." });
+    preguntas.push({ id:304, tipo:"vf", pregunta:"Un escrito llano debe entenderse a la primera lectura.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.156: 'Se puede entender la primera vez que se lee'." });
+    preguntas.push({ id:305, tipo:"mc", pregunta:"¿Cuál de las siguientes NO es una condición de un escrito llano y eficaz?", opciones:["Lenguaje apropiado al lector","Diseño racional","Lenguaje técnico sin explicación","Cumplir requisitos legales"], correcta:2, exp:"Manual pág.156: 'Usa un lenguaje apropiado al lector', no lenguaje técnico sin explicación." });
+    preguntas.push({ id:306, tipo:"vf", pregunta:"La redacción funcional tiene como objetivo explorar intereses personales.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.158: La escritura funcional tiene como objetivo 'comunicar, informar, estandarizar'." });
+    preguntas.push({ id:307, tipo:"mc", pregunta:"¿Qué tipo de escritura tiene como objetivo influir y modificar opiniones?", opciones:["Escritura creativa","Escritura expositiva","Escritura persuasiva","Escritura personal"], correcta:2, exp:"Manual pág.158: 'Persuasiva: Objetivo básico: influir y modificar opiniones'." });
+    preguntas.push({ id:308, tipo:"vf", pregunta:"El párrafo es una unidad intermedia entre la oración y el texto, con valor gráfico y significativo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.160: 'es una unidad intermedia, superior a la oración e inferior al apartado o al texto, con valor gráfico y significativo'." });
+    preguntas.push({ id:309, tipo:"mc", pregunta:"¿Cuál es la extensión máxima recomendada para una frase en redacción administrativa?", opciones:["10-15 palabras","20-30 palabras","40-50 palabras","Sin límite"], correcta:1, exp:"Manual pág.161: 'el MAP califica de longitud desmesurada la extensión de 20 - 30 palabras que dice que suele tener el párrafo administrativo'." });
+    preguntas.push({ id:310, tipo:"vf", pregunta:"Las frases negativas son más fáciles de entender que las afirmativas.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.162: 'Las frases negativas son difíciles de entender, porque requieren más atención y tiempo'." });
+    preguntas.push({ id:311, tipo:"mc", pregunta:"¿Qué signo de puntuación organiza el discurso en párrafos (tema, capítulo)?", opciones:["Punto final","Punto y aparte","Punto y seguido","Coma"], correcta:1, exp:"Manual pág.164: 'Punto y aparte - Párrafo - Tema, capítulo, apartado'." });
+    preguntas.push({ id:312, tipo:"vf", pregunta:"La comunicación bidireccional es más eficaz que la unidireccional.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.165: 'Este monólogo es menos eficaz que la comunicación bidireccional'." });
+    preguntas.push({ id:313, tipo:"mc", pregunta:"¿Qué porcentaje de lo que aprendemos proviene de lo que vemos?", opciones:["50%","60%","83%","95%"], correcta:2, exp:"Manual pág.166: 'los psicólogos estiman que el 83% de lo que aprendemos procede de lo que vemos'." });
+    preguntas.push({ id:314, tipo:"vf", pregunta:"La comunicación interna incluye mensajes ascendentes, descendentes, horizontales y transversales.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.168: 'se reconocen los flujos de mensajes que... pueden ser: ascendentes, descendentes, horizontales o transversales'." });
+    preguntas.push({ id:315, tipo:"mc", pregunta:"¿Qué tipo de comunicación se da a través de canales explícitamente establecidos por la organización?", opciones:["Comunicación informal","Comunicación formal","Red cultural","Rumor"], correcta:1, exp:"Manual pág.169: 'comunicación formal como aquella que se da a través de los canales y espacios comunicacionales explícitamente establecidos'." });
+    preguntas.push({ id:316, tipo:"vf", pregunta:"En la gestión de conflictos, las soluciones más sostenibles se logran cuando se gestionan en función del poder.", opciones:["Verdadero","Falso"], correcta:1, exp:"Manual pág.172: 'las soluciones más sostenibles y menos costosas a largo plazo suelen lograrse cuando se gestionan los conflictos en función de los intereses'." });
+    preguntas.push({ id:317, tipo:"mc", pregunta:"¿Qué mecanismo NO es de gestión de conflictos basado en intereses?", opciones:["Negociación","Conciliación","Mediación","Imposición jerárquica"], correcta:3, exp:"Manual pág.173: 'Negociación, Conciliación, Mediación, Facilitación de consensos' son basados en intereses." });
+    preguntas.push({ id:318, tipo:"vf", pregunta:"La oratoria tiene como finalidad convencer, persuadir o conmover por medio de la palabra hablada.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.174: 'La oratoria es el género literario en prosa que tiene como finalidad convencer, persuadir o conmover'." });
+    preguntas.push({ id:319, tipo:"mc", pregunta:"¿Qué fase de la retórica se refiere a 'qué se va a decir' (acción de crear el discurso)?", opciones:["Dispositio","Elocutio","Inventio","Actio"], correcta:2, exp:"Manual pág.176: 'Inventio (la invención): Se trata sobre qué es lo que se va a decir'." });
+    preguntas.push({ id:320, tipo:"vf", pregunta:"La ética de la comunicación incluye la transparencia, honestidad y respeto a la confidencialidad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág.177-178: 'Garantizar siempre la transparencia y la honestidad', 'Respetar la confidencialidad y la privacidad'." });
+    preguntas.push({ id:321, tipo:"mc", pregunta:"Según la Ley 12.521, ¿cuál es un deber esencial del personal policial en actividad?", opciones:["Hacer huelga","Guardar secreto aún después del retiro","Recibir dádivas","Elegir sus superiores"], correcta:1, exp:"Art. 23 inc. i: 'Guardar secreto, aún después del retiro o baja de la Institución'." });
+    preguntas.push({ id:322, tipo:"vf", pregunta:"La autoridad policial corresponde al personal del escalafón general, profesional y técnico.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art. 25: 'El personal policial del escalafón general es el único investido de autoridad policial'." });
+    preguntas.push({ id:323, tipo:"mc", pregunta:"¿Qué implica la 'superioridad jerárquica'?", opciones:["Tener mayor antigüedad","Tener un grado más elevado","Tener un cargo superior","Tener más edad"], correcta:1, exp:"Art. 17: 'Superioridad jerárquica es la que tiene el personal con respecto a otro, por haber alcanzado un grado más elevado'." });
+    preguntas.push({ id:324, tipo:"vf", pregunta:"El personal con autoridad policial está obligado a portar arma de fuego durante todo el día.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art. 29: 'durante el tiempo de prestación del servicio'." });
+    preguntas.push({ id:325, tipo:"mc", pregunta:"¿Qué requisito es necesario para el ingreso a la Institución (art. 32)?", opciones:["Título universitario","Ser argentino, nativo o por opción","Ser mayor de 30 años","Tener familiares en la policía"], correcta:1, exp:"Art. 32 inc. b: 'Ser argentino, nativo o por opción'." });
+    preguntas.push({ id:326, tipo:"vf", pregunta:"El personal del escalafón técnico ingresa mediante concurso de admisión con título universitario.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art. 35: 'El personal del escalafón técnico ingresará mediante cursos especiales'." });
+    preguntas.push({ id:327, tipo:"mc", pregunta:"¿Qué falta disciplinaria se considera leve según el art. 41?", opciones:["Abandono del puesto","Dormirse en servicio","Tardanza injustificada de hasta 72 horas","Uso de armas no autorizadas"], correcta:2, exp:"Art. 41 inc. c: 'La tardanza o inasistencia injustificada de hasta 72 (setenta y dos) horas' es falta leve." });
+    preguntas.push({ id:328, tipo:"vf", pregunta:"El concurso de 3 faltas leves implica automáticamente falta grave.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 42: 'El concurso de 3 faltas leves implica falta grave'." });
+    preguntas.push({ id:329, tipo:"mc", pregunta:"¿Qué sanción NO es una medida de suspensión según el art. 44?", opciones:["Suspensión provisional","Suspensión de empleo","Apercibimiento agravado","Todas son de suspensión"], correcta:2, exp:"Art. 44: 'b) De suspensión: 1.- Suspensión provisional; 2.- Suspensión de empleo'. Apercibimiento es de corrección." });
+    preguntas.push({ id:330, tipo:"vf", pregunta:"La prescripción de la acción disciplinaria para faltas leves es al año de cometidas.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 68: 'a) Al año de cometida las faltas leves'." });
+    // ========== BLOQUE 12: PREGUNTAS 331-350 (Manual – Permisos, Licencias y Miscelánea) ==========
+    preguntas.push({ id:331, tipo:"mc", pregunta:"¿Qué plazo máximo puede tener un permiso según el art. 80 de la Ley 12.521?", opciones:["1 día por mes","2 días por mes y 6 días en el año","3 días por mes","5 días por mes"], correcta:1, exp:"Art. 80: 'eximiéndolo de las obligaciones del servicio por un lapso de hasta dos (2) días por mes y seis (6) días en el año'." });
+    preguntas.push({ id:332, tipo:"vf", pregunta:"La mujer policía desde el tercer mes de embarazo queda excluida de servicios nocturnos y de esfuerzo físico.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 80: 'La mujer policía desde el tercer mes de embarazo gozará de exclusión de los servicios de trabajo por equipo o rotativos... servicios nocturnos y ambientes hostiles'." });
+    preguntas.push({ id:333, tipo:"mc", pregunta:"¿Cuántos descansos para amamantar puede disponer la madre lactante?", opciones:["1 descanso de 15 minutos","2 descansos de media hora","3 descansos de 20 minutos","1 hora continua obligatoria"], correcta:1, exp:"Art. 80: 'podrá disponer de 2 descansos de media hora para amamantar a su hijo'." });
+    preguntas.push({ id:334, tipo:"vf", pregunta:"Se justifican hasta 3 tardanzas de 30 minutos por mes para padres de niños menores de 12 años.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 80: 'Se justificarán hasta 3 tardanzas de 30 minutos por mes... al personal policial de ambos sexos, padres de niños menores de 12 años'." });
+    preguntas.push({ id:335, tipo:"mc", pregunta:"¿Cuántos días de licencia anual ordinaria corresponden al personal con 20 años de antigüedad?", opciones:["19 días","25 días","30 días","35 días"], correcta:3, exp:"Art. 82: 'c) desde quince (15) años, treinta y cinco (35) días'." });
+    preguntas.push({ id:336, tipo:"vf", pregunta:"La licencia extraordinaria puede otorgarse más de una vez en la carrera policial.", opciones:["Verdadero","Falso"], correcta:1, exp:"Art. 84: 'Será facultad del Poder Ejecutivo otorgarla una sola vez en la carrera policial'." });
+    preguntas.push({ id:337, tipo:"mc", pregunta:"¿Qué requisito debe cumplir el personal para solicitar licencia excepcional?", opciones:["Menos de 5 años de antigüedad","No menos de 10 años de antigüedad","Cualquier antigüedad","Sólo para oficiales"], correcta:1, exp:"Art. 85: 'Para hacer uso de licencia excepcional el personal deberá contar con no menos de diez (10) años de antigüedad'." });
+    preguntas.push({ id:338, tipo:"vf", pregunta:"El traslado es el cambio de destino del personal a una dependencia en otra localidad.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 70: 'Se denomina traslado al cambio de destino del personal a una dependencia situada en otra localidad'." });
+    preguntas.push({ id:339, tipo:"mc", pregunta:"¿Qué es la 'adscripción' según el art. 70?", opciones:["Cambio definitivo de destino","Pase a otra dependencia por tiempo determinado con reintegro","Rotación interna","Pase a situación pasiva"], correcta:1, exp:"Art. 70: 'Se denomina adscripción cuando se pasa a prestar servicio a una dependencia, por tiempo determinado y con obligación de reintegro'." });
+    preguntas.push({ id:340, tipo:"vf", pregunta:"Los cambios de destino y traslados pueden ser dispuestos por el Jefe de Policía por razones de servicio.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 71: 'Los cambios de destino y traslados del personal, sólo pueden ser dispuestos por el Jefe de Policía'." });
+    preguntas.push({ id:341, tipo:"mc", pregunta:"¿Qué situación de revista implica que el personal no presta servicio pero percibe haberes reducidos?", opciones:["Servicio efectivo","Disponibilidad","Pasiva","Licencia"], correcta:1, exp:"Art. 90 y 111: disponibilidad (75% o 50% según el caso)." });
+    preguntas.push({ id:342, tipo:"vf", pregunta:"El tiempo en situación pasiva no se computa para el ascenso, salvo sobreseimiento o absolución posterior.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 91: 'El tiempo transcurrido en situación de pasiva no se computará para el ascenso salvo el caso del personal que haya estado en esa situación por hallarse procesado, y posteriormente obtuviera su sobreseimiento definitivo o absolución'." });
+    preguntas.push({ id:343, tipo:"mc", pregunta:"¿Qué porcentaje del sueldo percibe el personal en disponibilidad por suspensión de empleo (inc. d art. 90)?", opciones:["50%","75%","100%","0%"], correcta:0, exp:"Art. 111 c: 'Los comprendidos en el inciso d) del Artículo 90, el cincuenta por ciento (50%) del sueldo básico, únicamente'." });
+    preguntas.push({ id:344, tipo:"vf", pregunta:"La baja del personal policial significa la pérdida del estado policial.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 93: 'La baja del personal policial significa la pérdida del estado policial'." });
+    preguntas.push({ id:345, tipo:"mc", pregunta:"¿Qué suplemento percibe el personal por 'riesgo profesional' en el escalafón general?", opciones:["Hasta 25% del sueldo básico","Hasta 50% del sueldo básico de suboficial","100% adicional","Una suma fija"], correcta:1, exp:"Art. 102: 'cuyo monto... podrá alcanzar hasta el cincuenta por ciento (50%) del sueldo básico del grado de suboficial de policía'." });
+    preguntas.push({ id:346, tipo:"vf", pregunta:"El suplemento por 'título' se otorga por acreditar estudios secundarios, terciarios o universitarios.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 100: 'El personal que acredite poseer estudios secundarios... tendrá derecho a una bonificación por 'título''." });
+    preguntas.push({ id:347, tipo:"mc", pregunta:"¿Cuántos años de servicio se requieren para el retiro obligatorio con derecho a haber?", opciones:["15 años","20 años","25 años","30 años"], correcta:1, exp:"Art. 17 (remite a Ley 11530): 'El retiro obligatorio será con derecho a haber para el personal que acredite como mínimo veinte (20) años de servicios policiales'." });
+    preguntas.push({ id:348, tipo:"vf", pregunta:"Los ascensos del personal policial se producen por decreto del Poder Ejecutivo.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 73: 'se producirán por decreto del Poder Ejecutivo'." });
+    preguntas.push({ id:349, tipo:"mc", pregunta:"¿Qué anexo de la Ley 12.521 establece los tiempos de permanencia en cada grado?", opciones:["Anexo I","Anexo II","Anexo III","Capítulo 5"], correcta:1, exp:"Art. 75: 'con el tiempo de permanencia que establece el Anexo II'." });
+    preguntas.push({ id:350, tipo:"vf", pregunta:"El personal que se halle bajo sumario administrativo no resuelto puede participar del concurso, pero se suspende la propuesta de ascenso.", opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 79: 'podrá participar del concurso pero... el Ministerio de Seguridad deberá dictar una resolución dejando en suspenso la propuesta de ascenso'." });
+    // ========== TOTAL DE PREGUNTAS CARGADAS ==========
+    // (no tocar nada de acá para abajo)
+
+    // ---------- Estado de la aplicación ----------
+    let currentIndex = 0;
+    let userAnswers = new Array(350).fill(null);
+    let answerStatus = new Array(350).fill(false);
+    let scoreCorrect = 0;
+    let scoreIncorrect = 0;
+
+    const cuerpoQuiz = document.getElementById('cuerpoQuiz');
+    const barraProgreso = document.getElementById('barraProgreso');
+    const textoContador = document.getElementById('textoContador');
+    const puntajeDisplay = document.getElementById('puntajeDisplay');
+
+    function renderPregunta() {
+        const q = preguntas[currentIndex];
+        const isAnswered = answerStatus[currentIndex];
+        const selectedIdx = userAnswers[currentIndex];
+        const isCorrect = (selectedIdx !== null && selectedIdx === q.correcta);
+
+        let html = `<div class="pregunta-texto">${currentIndex+1}. ${q.pregunta}</div>`;
+        html += `<div class="opciones-area" id="opcionesArea">`;
+
+        q.opciones.forEach((opt, idx) => {
+            let cls = "opcion-boton";
+            if (isAnswered) {
+                if (idx === q.correcta) cls += " correcta";
+                else if (idx === selectedIdx && selectedIdx !== q.correcta) cls += " incorrecta";
+            }
+            let prefix = q.tipo === "vf" ? "" : String.fromCharCode(65+idx) + ". ";
+            html += `<button class="${cls}" data-opt-index="${idx}" ${isAnswered ? 'disabled' : ''}>${prefix}${opt}</button>`;
+        });
+
+        html += `</div>`;
+
+        if (isAnswered) {
+            const correctaTexto = q.opciones[q.correcta];
+            if (isCorrect) {
+                html += `<div class="retro-card"><div class="retro-titulo-correcto">✅ Correcto</div><div class="retro-detalle"><strong>${correctaTexto}</strong><br>${q.exp}</div></div>`;
+            } else {
+                const elegidaTexto = (selectedIdx!==null) ? q.opciones[selectedIdx] : '';
+                html += `<div class="retro-card"><div class="retro-titulo-incorrecto">❌ Incorrecto</div><div class="retro-detalle">Respuesta correcta: <strong>${correctaTexto}</strong><br><span style="opacity:0.7">Elegiste: ${elegidaTexto}</span><br><br>${q.exp}</div></div>`;
+            }
+        }
+
+        html += `<div class="navegacion">`;
+        html += `<button class="btn btn-sec" id="prevBtn" ${currentIndex===0?'disabled':''}>⮜ Anterior</button>`;
+        html += `<span class="indice-preg">${currentIndex+1} / 350</span>`;
+        html += `<button class="btn" id="nextBtn" ${currentIndex===349?'disabled':''}>Siguiente ⮞</button>`;
+        html += `</div>`;
+        html += `<div class="separador"></div>`;
+        html += `<div style="display:flex; justify-content:center;"><button class="btn reset-btn" id="resetBtn">↺ Reiniciar respuestas</button></div>`;
+
+        cuerpoQuiz.innerHTML = html;
+
+        document.querySelectorAll('.opcion-boton').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (answerStatus[currentIndex]) return;
+                const optIdx = parseInt(btn.dataset.optIndex);
+                handleAnswer(currentIndex, optIdx);
+            });
+        });
+
+        document.getElementById('prevBtn')?.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderPregunta();
+                actualizarProgreso();
+            }
+        });
+        document.getElementById('nextBtn')?.addEventListener('click', () => {
+            if (currentIndex < 349) {
+                currentIndex++;
+                renderPregunta();
+                actualizarProgreso();
+            }
+        });
+        document.getElementById('resetBtn')?.addEventListener('click', resetRespuestas);
+    }
+
+    function handleAnswer(index, optIdx) {
+        if (answerStatus[index]) return;
+        answerStatus[index] = true;
+        userAnswers[index] = optIdx;
+        if (optIdx === preguntas[index].correcta) {
+            scoreCorrect++;
+        } else {
+            scoreIncorrect++;
+        }
+        actualizarPuntaje();
+        renderPregunta();
+        actualizarProgreso();
+    }
+
+    function actualizarPuntaje() {
+        puntajeDisplay.innerText = `✅ ${scoreCorrect}  ·  ❌ ${scoreIncorrect}`;
+    }
+
+    function actualizarProgreso() {
+        const respondidas = answerStatus.filter(v => v === true).length;
+        const porcentaje = (respondidas / 350) * 100;
+        barraProgreso.style.width = porcentaje + '%';
+        textoContador.innerText = `Pregunta ${currentIndex+1} / 350`;
+    }
+
+    function resetRespuestas() {
+        if (confirm("¿Reiniciar todas las respuestas?")) {
+            userAnswers = new Array(350).fill(null);
+            answerStatus = new Array(350).fill(false);
+            scoreCorrect = 0;
+            scoreIncorrect = 0;
+            currentIndex = 0;
+            actualizarPuntaje();
+            renderPregunta();
+            actualizarProgreso();
+        }
+    }
+
+    // Iniciar
+    renderPregunta();
+    actualizarProgreso();
+
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
