@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📋 CUESTIONARIO ASCENSO POLICIAL 2025</title>
      <style>
-        /* VERSIÓN COMPACTA - 75% del tamaño original */
+        /* ===== VERSIÓN ULTRA MÓVIL - 60% del tamaño original ===== */
         * {
             box-sizing: border-box;
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
@@ -18,81 +18,85 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 10px;
+            padding: 8px;
+            margin: 0;
         }
         .quiz-container {
-            max-width: 825px; /* 75% de 1100px */
+            max-width: 650px; /* 60% de 1100px */
             width: 100%;
             background-color: #ffffff;
-            border-radius: 36px 36px 27px 27px; /* 75% */
-            box-shadow: 0 18px 34px -8px #0a2f4e;
+            border-radius: 28px 28px 22px 22px;
+            box-shadow: 0 15px 28px -8px #0a2f4e;
             overflow: hidden;
         }
         .cabecera {
             background: #0b2f4a;
             color: white;
-            padding: 21px 27px 16px 27px; /* 75% */
+            padding: 16px 20px 12px 20px;
         }
         .cabecera h1 {
             font-weight: 700;
-            font-size: 1.65rem; /* 75% de 2.2rem */
-            letter-spacing: -0.4px;
-            margin-bottom: 9px;
+            font-size: 1.4rem;
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
         }
         .cabecera p {
-            font-size: 0.9rem; /* 75% */
+            font-size: 0.8rem;
             opacity: 0.9;
+            line-height: 1.3;
         }
         .progreso-barra {
             background-color: #204b6d;
-            border-radius: 75px;
-            height: 15px; /* 75% */
-            margin: 16px 0 9px 0;
+            border-radius: 50px;
+            height: 12px;
+            margin: 12px 0 6px 0;
         }
         .progreso-lleno {
             background: #7ac7ff;
-            height: 15px;
-            border-radius: 75px;
+            height: 12px;
+            border-radius: 50px;
             width: 0%;
             transition: width 0.2s ease;
-            box-shadow: 0 0 14px #9ad1ff;
+            box-shadow: 0 0 10px #9ad1ff;
         }
         .contadores {
             display: flex;
             justify-content: space-between;
             font-weight: 500;
-            font-size: 0.9rem; /* 75% */
+            font-size: 0.75rem;
             color: #c7def5;
         }
         .cuerpo {
-            padding: 30px 30px 38px 30px; /* 75% */
+            padding: 18px 18px 25px 18px;
             background: #f7faff;
         }
         .pregunta-texto {
-            font-size: 1.5rem; /* 75% de 2.0rem aprox */
+            font-size: 1.2rem;
             font-weight: 600;
             color: #0f293f;
-            margin-bottom: 26px;
-            line-height: 1.3;
+            margin-bottom: 18px;
+            line-height: 1.4;
         }
         .opciones-area {
             display: flex;
             flex-direction: column;
-            gap: 12px; /* 75% */
-            margin-bottom: 30px;
+            gap: 8px;
+            margin-bottom: 20px;
         }
         .opcion-boton {
             background: white;
-            border: 2px solid #b9ccde;
-            border-radius: 45px; /* 75% */
-            padding: 15px 24px; /* 75% */
-            font-size: 1rem; /* 75% de 1.25rem */
+            border: 1.5px solid #b9ccde;
+            border-radius: 40px;
+            padding: 12px 18px;
+            font-size: 0.9rem;
             font-weight: 500;
             text-align: left;
             cursor: pointer;
             transition: 0.15s;
             color: #102b3f;
-            box-shadow: 0 4px 8px rgba(0,25,50,0.05);
+            box-shadow: 0 3px 6px rgba(0,25,50,0.05);
+            line-height: 1.3;
+            word-break: break-word;
         }
         .opcion-boton:hover:not(:disabled) {
             background: #e0efff;
@@ -108,7 +112,7 @@
             background: #ffe0de;
             border-color: #c53131;
             color: #771c1c;
-            text-decoration: line-through 2px #c53131;
+            text-decoration: line-through 1.5px #c53131;
         }
         .opcion-boton:disabled {
             cursor: default;
@@ -116,60 +120,61 @@
         }
         .retro-card {
             background: white;
-            border-radius: 30px; /* 75% */
-            padding: 21px 24px; /* 75% */
-            border-left: 9px solid #1f6fb0;
-            box-shadow: 0 15px 26px rgba(9,60,110,0.15);
-            margin: 19px 0 22px 0;
+            border-radius: 24px;
+            padding: 16px 18px;
+            border-left: 8px solid #1f6fb0;
+            box-shadow: 0 12px 20px rgba(9,60,110,0.15);
+            margin: 15px 0 18px 0;
         }
         .retro-titulo-correcto {
             color: #0b6b2c;
-            font-size: 1.4rem; /* 75% */
+            font-size: 1.2rem;
             font-weight: 700;
             display: flex;
-            gap: 11px;
+            gap: 8px;
             align-items: center;
-            margin-bottom: 11px;
+            margin-bottom: 8px;
         }
         .retro-titulo-incorrecto {
             color: #b63131;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             display: flex;
-            gap: 11px;
+            gap: 8px;
             align-items: center;
-            margin-bottom: 11px;
+            margin-bottom: 8px;
         }
         .retro-detalle {
-            font-size: 1rem; /* 75% */
+            font-size: 0.85rem;
             background: #e9f2fc;
-            border-radius: 21px;
-            padding: 16px 21px;
+            border-radius: 18px;
+            padding: 14px 16px;
             color: #0f3b55;
-            line-height: 1.6;
+            line-height: 1.5;
+            word-break: break-word;
         }
         .navegacion {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 11px;
+            gap: 8px;
         }
         .btn {
             border: none;
-            padding: 12px 25px; /* 75% */
-            border-radius: 38px; /* 75% */
-            font-size: 1rem; /* 75% */
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
             font-weight: 600;
             background: #1c4a70;
             color: white;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 6px 12px rgba(8,50,85,0.3);
+            box-shadow: 0 4px 8px rgba(8,50,85,0.3);
+            min-width: 90px;
         }
         .btn:hover:not(:disabled) {
             background: #2d6b9c;
-            transform: scale(1.02);
         }
         .btn:disabled {
             opacity: 0.4;
@@ -180,30 +185,36 @@
             box-shadow: none;
         }
         .indice-preg {
-            font-size: 1.1rem; /* 75% */
+            font-size: 0.9rem;
             font-weight: 600;
             color: #0c3b5e;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #c1d6ec;
         }
         .reset-btn {
             background: #284b63;
-            padding: 9px 21px; /* 75% */
+            padding: 8px 16px;
+            font-size: 0.85rem;
         }
         .separador {
             border: 1px solid #c1d6ec;
-            margin: 22px 0 11px 0;
+            margin: 15px 0 8px 0;
         }
         .pie {
             text-align: center;
             color: #557c9a;
-            margin: 15px 0 8px 0;
-            font-size: 0.85rem; /* 75% */
+            margin: 10px 0 5px 0;
+            font-size: 0.7rem;
         }
-        /* Ajuste extra para pantallas muy chicas */
-        @media (max-width: 480px) {
-            .cabecera h1 { font-size: 1.4rem; }
-            .pregunta-texto { font-size: 1.3rem; }
-            .opcion-boton { padding: 12px 18px; }
-            .btn { padding: 10px 18px; }
+        /* Ajuste para pantallas muy pequeñas (menos de 380px) */
+        @media (max-width: 380px) {
+            .cabecera h1 { font-size: 1.2rem; }
+            .pregunta-texto { font-size: 1.1rem; }
+            .opcion-boton { padding: 10px 14px; font-size: 0.85rem; }
+            .btn { padding: 8px 12px; font-size: 0.85rem; min-width: 70px; }
+            .indice-preg { font-size: 0.8rem; padding: 4px 8px; }
         }
     </style>
 </head>
