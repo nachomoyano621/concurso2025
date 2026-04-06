@@ -694,16 +694,7 @@
     preguntasBase.push({ id:408, tipo:"vf", pregunta:"La 'asimetría sobrevenida' es la desventaja que surge durante el contacto con el agresor.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág. 59: 'Asimetría Sobrevenida: Es la desventaja que surge durante el contacto'." });
     preguntasBase.push({ id:409, tipo:"mc", pregunta:"¿Qué nivel de uso de la fuerza corresponde a 'control físico moderado'?", opciones:["Presencia disuasiva","Comunicación verbal","Técnicas de restricción sin causar lesiones","Uso de armas de fuego"], correcta:2, exp:"Manual pág. 60: 'c) Control físico moderado: Uso de técnicas de restricción sin causar lesiones'." });
     preguntasBase.push({ id:410, tipo:"vf", pregunta:"El uso de armas de menor letalidad incluye pistolas de electrochoque y agentes químicos paralizantes.", opciones:["Verdadero","Falso"], correcta:0, exp:"Manual pág. 61: Art. 13: 'Las armas de electrochoque... agentes químicos paralizantes' son de menor letalidad." });
-    // ========== TOTAL DE PREGUNTAS CARGADAS ==========
-    for (let i = preguntasBase.length + 1; i <= 410; i++) {
-        if (i % 5 === 0) {
-            preguntasBase.push({ id:i, tipo:"vf", pregunta:`¿El principio de idoneidad rige los ascensos?`, opciones:["Verdadero","Falso"], correcta:0, exp:"Art. 73: los ascensos se rigen por el principio de idoneidad." });
-        } else if (i % 3 === 0) {
-            preguntasBase.push({ id:i, tipo:"mc", pregunta:`Según el Decreto 1166/18, ¿qué ponderación tiene la oposición para Dirección?`, opciones:["40%","50%","60%","70%"], correcta:2, exp:"Dirección: antecedentes 40%, oposición 60%." });
-        } else {
-            preguntasBase.push({ id:i, tipo:"mc", pregunta:`¿Qué falta grave se configura por 'dormirse en servicio'?`, opciones:["Falta leve","Falta grave","No está tipificado","Depende"], correcta:1, exp:"Art.43 inc. a punto 2: 'Dormirse en servicio' es falta grave." });
-        }
-    }
+
 
     // ========== VARIABLES GLOBALES ==========
     let preguntas = [];  // Array que se mezclará
