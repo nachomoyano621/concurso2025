@@ -965,6 +965,60 @@ const tema9 = [
 
 ];
 
+// TEMA 10: Tabla de Faltas Leves con sanciones (RE, AS, AA)
+const temaFaltasLeves = [
+    // ===== RECONVENCIÓN ESCRITA (RE) =====
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No guardar el comportamiento adecuado al servicio o utilizar vocabulario inadecuado'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:0, exp:"Tabla: RE - AS (mixta, pero leve). La reconvención es la mínima." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No suministrar información necesaria por razones administrativas'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:0, exp:"Tabla: RE - AS. Falta administrativa leve." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No actualizar información personal relativa al vínculo laboral'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Multa"], correcta:0, exp:"Tabla: RE - AS. Omisión de actualización de domicilio, etc." },
+    
+    // ===== APERCIBIMIENTO SIMPLE (AS) =====
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Fumar dentro y fuera de dependencias policiales en horario de servicio'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:1, exp:"Tabla: AS + cese inmediato de la falta." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No comunicar resolución judicial o administrativa dentro de 3 días'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:1, exp:"Tabla: AS. Omisión de comunicación que afecta situación de revista." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Producir por negligencia, imprudencia o impericia daño a bienes del Estado'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:1, exp:"Tabla: AS + reparación del daño." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Extravío de distintivos por simple negligencia'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:1, exp:"Tabla: AS + reparación del daño." },
+    
+    // ===== APERCIBIMIENTO AGRAVADO (AA) =====
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No ejercer las facultades de mando y disciplinarias'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA. Abandono de funciones de mando." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Desarrollar actividades lucrativas o incompatibles con la función policial'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA + cese inmediato." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Ostentación de condición policial sin causa justificada'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Falta de respeto o insultos entre agentes policiales'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Ordenar a un subalterno tareas ajenas a la función policial'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Quejarse del servicio afectando la disciplina'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Inasistencia injustificada de hasta 72 horas'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Descuento de haberes"], correcta:2, exp:"Tabla: AA + descuento." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Simular enfermedad o dolencia'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Emplear recursos policiales para actividades no relacionadas con el servicio'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Conducir imprudentemente sin riesgo concreto para terceros'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No cumplir con el horario de trabajo establecido'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Descuento"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Asumir actitudes displicentes ante una orden'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No cumplir las órdenes de servicio'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No controlar debidamente los servicios a cargo'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No responder por incumplimientos de subordinados'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No tener actualizado el domicilio real'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:0, exp:"Tabla: RE - AS (falta administrativa)." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Realizar gestiones valiéndose de influencias'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Prescindir del canal reglamentario para reclamos'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Realizar declaraciones que induzcan a error o denuncias falsas'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Comunicarse con detenidos sin causa justificada'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Divulgar informes internos sin autorización'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Consumir sustancias que afecten la plenitud psicofísica (sin ser grave)'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA. Si daña a terceros es falta grave." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Producir daño a bienes del Estado por inobservancia de deberes'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA + reparación del daño." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'No preservar en buen estado locales policiales'?", opciones:["Reconvención (RE)","Apercibimiento simple (AS)","Apercibimiento agravado (AA)","Suspensión"], correcta:2, exp:"Tabla: AA + reparación del daño." },
+    
+    // ===== MIXTAS (RE - AS) =====
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Demora en la toma de servicio de más de 15 minutos'?", opciones:["RE - AS","Sólo RE","Sólo AS","AA"], correcta:0, exp:"Tabla: RE - AS según gravedad." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Prestar servicios con falta de diligencia (por culpa)'?", opciones:["RE - AS","AA","Suspensión","Destitución"], correcta:0, exp:"Tabla: culpa → RE - AS; dolo → AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Falta de aseo o descuido en el uniforme (reparable en el momento)'?", opciones:["RE - AS","AA","Sólo AS","Sólo RE"], correcta:0, exp:"Tabla: reparable → RE - AS; no reparable → AA." },
+    { tipo:"mc", pregunta:"¿Qué sanción corresponde a 'Otras faltas en modo, tiempo y forma del servicio (por culpa)'?", opciones:["RE - AS","AA","Suspensión","Multa"], correcta:0, exp:"Tabla: culpa → RE - AS; dolo → AA." },
+    
+    // ===== MIXTAS (AS - AA) =====
+    { type:"mc", pregunta:"¿Qué sanción corresponde a 'Incumplir disposiciones legítimamente adoptadas por superiores'?", opciones:["AS - AA","RE - AS","Sólo AS","Sólo AA"], correcta:0, exp:"Tabla: AS - AA según gravedad." },
+    { type:"mc", pregunta:"¿Qué sanción corresponde a 'Cumplir negligentemente las órdenes de servicio'?", opciones:["AS - AA","RE - AS","Sólo AS","Sólo AA"], correcta:0, exp:"Tabla: AS - AA según afectación." },
+    { type:"mc", pregunta:"¿Qué sanción corresponde a 'Otro daño a bienes del Estado que pudiere ser reparado'?", opciones:["AS - AA","RE - AS","AA + reparación","AS + reparación"], correcta:0, exp:"Tabla: AS - AA + reparación del daño." },
+];
+
+// Agregar al contador
+console.log("Tema Faltas Leves cargado con", temaFaltasLeves.length, "preguntas");
+
 // Agrupar todos los temas
 const preguntasPorTema = {
     tema1: tema1,
@@ -975,7 +1029,8 @@ const preguntasPorTema = {
     tema6: tema6,
     tema7: tema7,
     tema8: tema8,
-    tema9: tema9
+    tema9: tema9,
+    temaFaltasLeves: temaFaltasLeves  
 };
 
 const temasInfo = [
@@ -987,7 +1042,8 @@ const temasInfo = [
     { id: "tema6", nombre: "🚺 Violencia de Género", descripcion: "Ley 26.485, modalidades, femicidio, protocolo policial.", total: tema6.length },
     { id: "tema7", nombre: "👮 Conducción y Liderazgo", descripcion: "Mando, principios de conducción, liderazgo policial.", total: tema7.length },
     { id: "tema8", nombre: "🔐 Seguridad de la Información", descripcion: "Triada CID, amenazas, buenas prácticas, 2FA.", total: tema8.length },
-    { id: "tema9", nombre: "⚠️ Faltas Leves y Graves", descripcion: "Infracciones disciplinarias, sanciones, atenuantes y agravantes.", total: tema9.length }
+    { id: "tema9", nombre: "⚠️ Faltas Leves y Graves", descripcion: "Infracciones disciplinarias, sanciones, atenuantes y agravantes.", total: tema9.length },
+    { id: "temaFaltasLeves", nombre: "📋 Sanciones Leves (RE · AS · AA)", descripcion: "Clasificación por tipo de sanción: Reconvención, Apercibimiento Simple y Apercibimiento Agravado.", total: temaFaltasLeves.length } 
 ];
 
 // Renderizar pantalla principal
